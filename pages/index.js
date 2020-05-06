@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Date from '../components/date'
 
 // API Calls are a good example for forms.
-async function submitForm(e) {
+/*async function submitForm(e) {
   console.info("form event", e);
   e.preventDefault();
   try {
@@ -17,7 +17,7 @@ async function submitForm(e) {
   } catch (e) {
     console.error(e);
   }
-}
+}*/
 
 export default function Home({ allPostsData }) {
   return (
@@ -47,11 +47,6 @@ export default function Home({ allPostsData }) {
             </li>
           ))}
         </ul>
-      </section>
-      <section>
-        <form>
-          <button onClick={submitForm}>CLICK ME</button>
-        </form>
       </section>
     </Layout>
   )
