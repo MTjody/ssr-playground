@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Date from '../components/date'
 
 // API Calls are a good example for forms.
-async function submitForm(e) {
+/*async function submitForm(e) {
   console.info("form event", e);
   e.preventDefault();
   try {
@@ -17,7 +17,7 @@ async function submitForm(e) {
   } catch (e) {
     console.error(e);
   }
-}
+}*/
 
 export default function Home({ allPostsData }) {
   return (
@@ -26,11 +26,7 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>I like nerdy stuff</p>
-        <p >
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
+        <p>I will probably write something here in the future. For now this is the only text you're getting!</p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
@@ -47,11 +43,6 @@ export default function Home({ allPostsData }) {
             </li>
           ))}
         </ul>
-      </section>
-      <section>
-        <form>
-          <button onClick={submitForm}>CLICK ME</button>
-        </form>
       </section>
     </Layout>
   )
