@@ -1,9 +1,9 @@
 ---
-title: 'I hate passwords - Enter KeePass'
+title: 'Passwords schmasswords - Enter KeePass'
 date: '2020-05-05'
 ---
 
-**Nothing is more annoying than the error message** `Oops, looks like you used the wrong username or password`. I take that back, knowing that *the past you* once set the password that is preventing current you from logging in is more annoying! The solution? A password manager!
+**Nothing is more annoying than the error message** `Oops, looks like you used the wrong username or password`. I take that back, knowing that *the past you* once set the password that is preventing current you from logging in is more annoying! Security wise, a majority of people use [common passwords](https://en.wikipedia.org/wiki/List_of_the_most_common_passwords) (terrible), and/or the same password across multiple services (terribl-er). If the credentials are leaked from any site, malicious Mallory could do significant damage before you take action. [Check your accounts here](https://en.wikipedia.org/wiki/List_of_the_most_common_passwords) for any known breach. The solution? A password manager!
 
 **Most password managers have a free version.** The thing is, I need the passwords on all devices I use, and any future device, but these features will make the services start billing you. So after some light digging I found [KeePass](https://keepass.info/) - **an open source password manager** which writes account credentials and meta-data to a file which you can store wherever. The file is encrypted and only accessible with a master password (which I unfortunately have to remember). Since it's an encrypted file, it can be placed *'anywhere'* - preferrably somewhere safe - such as a flash memory or a cloud-based storage service. On top of this, you're now able to keep separate account types in different files, placed on different locations. E.g. one file for work logins, and one for personal logins. 
 
