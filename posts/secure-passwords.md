@@ -1,5 +1,5 @@
 ---
-title: 'Passwords schmasswords - Enter KeePass'
+title: 'Passwords schmasswords'
 date: '2020-05-05'
 ---
 
