@@ -1,6 +1,7 @@
 ---
 title: 'Passwords schmasswords'
 date: '2020-05-05'
+tldr: 'Human Memory Bad, Encrypted Computer Memory Good!'
 ---
 
 **Nothing is more annoying than the error message** `Oops, looks like you used the wrong username or password`. I take that back, knowing that *the past you* once set the password that is preventing current you from logging in is more annoying! Security wise, a majority of people use [common passwords](https://en.wikipedia.org/wiki/List_of_the_most_common_passwords) (terrible), and/or the same password across multiple services (terribl-er). If the credentials are leaked from any site, malicious Mallory could do significant damage before you take action. [Check your accounts here](https://en.wikipedia.org/wiki/List_of_the_most_common_passwords) for any known breach. The solution? A password manager!
