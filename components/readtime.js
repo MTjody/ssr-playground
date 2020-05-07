@@ -17,7 +17,7 @@ function approximateReadTime(rawText) {
     }
 
     let mins = Math.floor(totalSeconds / 60);
-    let remainingSeconds = totalSeconds % 60;
+    let remainingSeconds = Math.floor(totalSeconds % 60);
 
     return { mins, seconds: remainingSeconds };
 }
