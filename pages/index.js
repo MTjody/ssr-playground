@@ -1,9 +1,10 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css';
-import { getSortedPostsData } from '../lib/posts';
-import Link from 'next/link'
-import Date from '../components/date'
+import Head from "next/head";
+import Link from "next/link";
+
+import Layout, { siteTitle } from "../components/layout";
+import utilStyles from "../styles/utils.module.css";
+import { getSortedPostsData } from "../lib/posts";
+import Date from "../components/date";
 
 // API Calls are a good example for forms.
 /*async function submitForm(e) {
@@ -26,7 +27,10 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>I will probably write something here in the future. For now this is the only text you're getting!</p>
+        <p>
+          I will probably write something here in the future. For now this is
+          the only text you're getting!
+        </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog Posts</h2>
@@ -45,7 +49,7 @@ export default function Home({ allPostsData }) {
         </ul>
       </section>
     </Layout>
-  )
+  );
 }
 
 /*
@@ -54,10 +58,10 @@ export default function Home({ allPostsData }) {
   Runs at build time in prod!
  */
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+  const allPostsData = getSortedPostsData();
   return {
     props: {
-      allPostsData
-    }
-  }
+      allPostsData,
+    },
+  };
 }

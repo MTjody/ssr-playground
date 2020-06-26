@@ -1,0 +1,169 @@
+---
+title: "Automated Testing part 1"
+date: "2020-06-26"
+tldr: "You really should test your code!"
+---
+
+## Disclaimer
+
+There are a multitude of resources written on this subject, by people who do this professionally each and every day. This post aims to give concrete reasoning and examples behind software testing together with first hand experiences, together with some example code.
+
+## Why
+
+Oftentimes when writing code, you run your app on changes and use your preferred client to test that the code you wrote does what you intended. A structured way of doing this, and making sure that any other developer - and CI/CD server - in your project does it, is writing tests. Tests should mimic the behaviour of your client and produce the same predictable results each test run. There are different layers of tests you can do with regards to test scope, and your whole test suite could follow the [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html#TheTestPyramid). The test pyramid is a model which defines the ratio between these different test layers. The key rule here is: the heaver the test, the smaller the percentage of your total tests.
+
+**Unit tests** are minimal tests written for a specific function or component, and should only test that specific function or component. The atom of testing if you will. You should have plenty of these since they will confirm that the building blocks of your application work as intended. Any dependencies here should be mocked or stubbed using your preferred testing framework.
+
+**Integration tests** will use several components / functions together and see if their integrating with each other works as intended, and produces the expected results. You can think of this as a molecule consisting of atoms. You should opt to write a lot of these as well, but make sure to test _how the components interact_ rather than checking what's already been covered in the unit tests. In this layer, you'd typically mock
+
+**End-to-end tests** will test your application as a whole. They require a bit more setup and will take more resources to run. This would be the cell, all the molecules working together to create life. Wonderful analogies aside, these types of tests should typically test your preferred user journey, and make sure the most common journeys work as intended. Depending on your application, you might have to setup your database and seed it with mocked values, so as to not be dependant on anything production related. Again, make sure you're not testing the specifics already tested by the previous layers.
+
+## How
+
+**Examples of abstraction layers** You can use abstraction layers in your codebase which allows for easy mocking in tests. In a REST API application, this can be achieved by dividing the app into:
+
+- a route controller which handles routing and parsing the request, and responsible for web exceptions. Here you could e.g. test your requests, and verify which service methods are invoked.
+- a service which handles the business logic, with responsibility for application exceptions. You'd typically test your business logic here. A lot of unit tests and integration tests could be written for this layer.
+- a data access layer which handles any database connection and querying. Testing this layer would require more setup and perhaps an active connection to a test database.
+
+Using this setup, you could test your business logic without the need to setup or use a database, which will make your test suite infinitely faster. This approach was part of a major architecture rehaul at a previous project. The test suite consisted of mostly end-to-end tests and as the platform as a whole grew with new applications depending on the API, our build servers were constantly running these tests which could take up to 15 - 20 mins to complete. After the rehaul we were down to a whole lot more tests running in under a couple of minutes.
+
+### Tests structure
+
+Let's look at some code. We'll be looking at tests using [Karma](https://karma-runner.github.io/latest/index.html) / [Jasmine](https://jasmine.github.io/) for these examples. Regardless of testing framework, a test suite consists mainly of the following steps:
+
+1. Import whatever it is you'll be testing
+2. Define your top level test class or function.
+3. Instantiate
+4. (optional) Mock dependencies
+5. Write the tests and what you expect
+
+```JavaScript
+// Import whatever it is you're testing
+import { SomeService } from '@app/services/some.service';
+
+// Define your top level function
+describe('SomeService', () => {
+  // Declare your service in a scope which can be reached by all tests in this function
+  let service: SomeService;
+
+  // This setup function will run before each individual test
+  beforeEach(() => {
+    // Initialize your service
+    service = new SomeService();
+  });
+
+  // This teardown function will run after each individual test
+  afterEach(() => {
+    cleanUp(); // whatever this could be, e.g. clearing your mocks or tearing down db connections.
+  });
+
+  // Just checking if the class was instantiated at all.
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+
+  // You can group your function tests in a nested describe block
+  describe('getSomeValue', () => {
+    it('should return some value which I`m expecting', () => {
+      const expected = "some value";
+      const received = service.getSomeValue();
+      expect(received).toBe(expected);
+    });
+    it('should throw an error when given faulty params', () => {
+      expect(service.getSomeValue({requiredValue: null, })).toThrow(new InternalServerError());
+    });
+  });
+});
+
+```
+
+The functions above are some examples of functions in the Jasmine framework. Notice how they make writing and grouping tests simple by using easy-to-read and easy-to-understand text.
+
+### Shallow-Dive into mocks
+
+Now consider a service which has dependencies, but they're not relly important to what we're testing. We just want to know if our service does what we expect it to. Writing a test and initializing the service the same way your app does will trigger the other services and they could potentially trigger their services and so on. This in turn could cause your test to either be really slow, or err on something you don't really care about.
+
+```JavaScript
+describe('SomeService', () => {
+  let service: SomeService;
+  /*
+  * This object will intercept any invokations on the HttpClients get method and do nothing.
+  * We could also configure it to respond however we'd like, e.g. mocking return values.
+  */
+  const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+
+  beforeEach(() => {
+    service = new SomeService(httpClientSpy);
+  });
+
+  afterEach(() => {
+    // reset your mocks!
+  });
+
+  describe('someFunction', () => {
+    it('should call httpClient.get to get a value', () => {
+      const expected = "some expected value";
+      const result = service.someFunction();
+      expect(httpClientSpy.get).toHaveBeenCalled();
+      expect(result).toBe(expected);
+    });
+    it('should not call httpClient.get if some param is missing', () => {
+      const expected = "some other expected value";
+      const result = service.someFunction({foo: "bar"});
+      expect(httpClientSpy.get).not.toHaveBeenCalled();
+      expect(result).toBe(expected);
+    })
+  });
+});
+```
+
+In the implementation of `someFunction`, the `HttpClient` dependency is invoked. But it won't be invoked in our test, since we created a spy object. We can then use the spy object to check if it was indeed invoked. We could also control what it was invoked with and how many times with other functions. If our service calls the httpClient depending on some logic, we can test that logic by checking that the spy was not invoked at all.
+
+### Recurring mocks
+
+Consider a service, `PopularService`, which gets injected into many other services / components. Now if you'd be writing tests for these services and components you'd probably repeat a lot of code by creating `PopularService` spies everywhere. An elegant way of solving this using e.g. TypeScript (or any other typed language) could be to create an interface `PopularService` which is implemented by `PopularServiceImpl`. You could then create a `PopularServiceMock` which also implements `PopularService`, and use the mock class in your all your tests:
+
+```javascript
+describe("UsersService", () => {
+  let usersService: UsersService;
+  let usersDaoMock: UsersDaoMock;
+
+  beforeEach(async () => {
+    // Test is a NestJS specific module. It mimics NgTest quite well. The function will return a module containing only a service and a dao mock
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        UsersService,
+        // Here we tell our module compiler to use the Mock implementation
+        { provide: UsersDaoImpl, useClass: UsersDaoMock },
+      ],
+    }).compile();
+
+    usersService = module.get < UsersService > UsersService;
+    usersDaoMock = module.get < UsersDaoMock > UsersDaoImpl;
+  });
+
+  afterEach(() => {
+    // Using the Jest test runner and framework in this example
+    jest.resetAllMocks();
+  });
+
+  describe("getUserById", () => {
+    const id = "jar-jar";
+    it("should invoke userDao.getUserById with the provided param", async () => {
+      // jest.fn() creates a spy, similar to the jasmine version in previous examples
+      usersDaoMock.getUserById = jest.fn();
+      await usersService.getUserById(id);
+      expect(usersDaoMock.getUserById).toHaveBeenCalledWith(id);
+    });
+    it("should throw NotFoundException if the user was not found", async () => {
+      // Return null on invocation this time, simulates not found.
+      usersDaoMock.getUserById = jest.fn(() => null);
+      // Jest specific syntax for awaiting and asserting thrown errors
+      await expect(() => usersService.getUserById(id)).rejects.toThrow(
+        new NotFoundException()
+      );
+    });
+  });
+});
+```
