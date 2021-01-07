@@ -27,3 +27,19 @@ img {
   max-width: 100%;
   display: block;
 }
+
+p > img {
+  margin: auto;
+}
+
+blockquote {
+  background: #f0f0f0;
+  padding: 2px 12px;
+  border-radius: 4px;
+  border-left: 2px solid;
+  margin: 0;
+}
+
+pre {
+  overflow: auto;
+}
