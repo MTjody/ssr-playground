@@ -33,7 +33,9 @@ export default function Layout({ children, home }) {
               className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={`${utilStyles.headingXl} ${styles.headerText}`}>
+              {name}
+            </h1>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -46,7 +48,7 @@ export default function Layout({ children, home }) {
                 />
               </a>
             </Link>
-            <h2 className={utilStyles.headingLg}>
+            <h2 className={`${utilStyles.headingLg} ${styles.headerText}`}>
               <Link href="/">
                 <a className={utilStyles.colorInherit}>{name}</a>
               </Link>
