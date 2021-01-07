@@ -22,7 +22,7 @@ When explaining Terraform, I mentioned that it allows you to declare the end-sta
 Let’s look at how we structured files and folders in a project.
 
 << SCREENSHOT OF FOLDERS >>
-![Screenshot of folders](../public/images/terraform-folders.png)
+![Screenshot of folders](/images/terraform-folders.png)
 
 We start with a `main.tf` file which is the entrypoint to our configuration. This file contains the meta of our infrastructure, such as which version of Terraform we’re using, and what cloud provider libraries we’re using. A provider is e.g. Amazon, GCP, or Azure. A module is a logical grouping of resources as defined by the provider. A resource is like a feature, e.g. Uptime checks is a feature within the Monitoring module.
 
