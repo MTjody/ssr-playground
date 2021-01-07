@@ -164,15 +164,22 @@ resource "google_monitoring_alert_policy" "alert_policy" {
 
 So how does a developer get started with this? [Install the Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) and start running Terraform commands in the terminal!
 
-    $ [playground] terraform init # initializes configured backend state, defaults to local state e.g. on your machine
+```bash
+# initializes configured backend state, defaults to local state e.g. on your machine
+[~/] terraform init
 
-    $ [playground] terraform validate # checks if you managed to write correct HCL
+# checks if you managed to write correct HCL
+[~/] terraform validate
 
-    $ [playground] terraform plan # dry-runs the configuration. The output is a ‘git-diff’ like (wall of) text showing what is to be added, changed, and deleted.
+# dry-runs the configuration. The output is a ‘git-diff’ like (wall of) text showing what is to be added, changed, and deleted.
+[~/] terraform plan
 
-    $ [playground] terraform apply # creates the resources according to the plan. In the GCP case, it runs a series of POST requests and follows up and outputs the results.
+# creates the resources according to the plan. In the GCP case, it runs a series of POST requests and follows up and outputs the results.
+[~/] terraform apply
 
-    $ [playground] terraform destroy # optional, destroys the configured resources. Should not be used in production unless you love adrenalin :)
+# optional, destroys the configured resources. Should not be used in production unless you love adrenalin :)
+[~/] terraform destroy
+```
 
 The workflow for a developer is basically running these commands until you have your desired infrastructure, or your demo-project has served its purpose.
 
