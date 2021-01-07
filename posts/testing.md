@@ -1,5 +1,5 @@
 ---
-title: "Automated Testing part 1"
+title: "Automated Testing"
 date: "2020-06-26"
 tldr: "You really should test your code!"
 ---

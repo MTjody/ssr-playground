@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
+import React from "react";
 
 const name = "@MTJody";
 export const siteTitle = "@MTJody";
@@ -32,7 +33,9 @@ export default function Layout({ children, home }) {
               className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={`${styles.headerText} ${utilStyles.headingXl}`}>
+              {name}
+            </h1>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -45,7 +48,7 @@ export default function Layout({ children, home }) {
                 />
               </a>
             </Link>
-            <h2 className={utilStyles.headingLg}>
+            <h2 className={`${styles.headerText} ${utilStyles.headingLg}`}>
               <Link href="/">
                 <a className={utilStyles.colorInherit}>{name}</a>
               </Link>
@@ -53,14 +56,16 @@ export default function Layout({ children, home }) {
           </React.Fragment>
         )}
       </header>
-      <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )}
+      <div className={styles.contentContainer}>
+        <main className={styles.contentBackground}>{children}</main>
+        {!home && (
+          <div className={styles.backToHome}>
+            <Link href="/">
+              <a>← Back to home</a>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
