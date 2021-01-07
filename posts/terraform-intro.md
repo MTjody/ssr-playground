@@ -44,7 +44,7 @@ terraform {
 }
 ```
 
-**locals** is a block of locally defined variables, in this case we define a credentials_file variable used for GCP credentials. The `file`-function lets us load a file and use the file contents in our config.
+**locals** is a block of locally defined variables, in this case we define a `credentials_file` variable used for GCP credentials. The `file`-function lets us load a file and use the file contents in our config.
 
 ```bash
 locals {
@@ -99,7 +99,7 @@ I want to highlight a few powerful features of Terraform by first explaining wha
 
 Let’s start from the top. This is not complete configuration though, a lot has been omitted for brevity. All the files in any given module will be combined by Terraform in the proper order when running commands. TF figures out any dependencies so that operations are performed in the required order.
 
-In the first block, we are adding http uptime checks, and we have several microservices to check. Instead of repeating the block for each microservice, a variable `paths` is used here. The variable type is `map`, with `objects` as values for each `key`, plain json actually. We access the values with dot-notation e.g. `each.value.name`, and the resource will be created for each path provided, as indicated by the `for_each` keyword. We then set values such as `display name` and `hostname`.
+In the first block, we are adding _http uptime checks_, and we have several microservices to check. Instead of repeating the block for each microservice, a variable `paths` is used here. The variable type is `map`, with `objects` as values for each `key`, plain json actually. We access the values with dot-notation e.g. `each.value.name`, and the resource will be created for each path provided, as indicated by the `for_each` keyword. We then set values such as `display name` and `hostname`.
 
 ```bash
 # UPTIME CHECKS
@@ -122,7 +122,7 @@ resource "google_monitoring_uptime_check_config" "http" {
 
 ```
 
-In the next resource block, we’re adding notification channels, based on the notification recipients string I mentioned earlier. For the display name, we combine functions `trimspace` and `split` for each email, and access the first value of the result.
+In the next resource block, we’re adding notification channels, based on the `notification recipients` string I mentioned earlier. For the display name, we combine functions `trimspace` and `split` for each email, and access the first value of the result.
 
 ```bash
 # NOTIFICATION CHANNELS
@@ -165,20 +165,24 @@ resource "google_monitoring_alert_policy" "alert_policy" {
 So how does a developer get started with this? [Install the Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) and start running Terraform commands in the terminal!
 
 ```bash
-# initializes configured backend state, defaults to local state e.g. on your machine
-[~/] terraform init
+# initializes configured backend state
+# defaults to local state e.g. on your machine
+[~/my_project] terraform init
 
 # checks if you managed to write correct HCL
-[~/] terraform validate
+[~/my_project] terraform validate
 
-# dry-runs the configuration. The output is a ‘git-diff’ like (wall of) text showing what is to be added, changed, and deleted.
-[~/] terraform plan
+# dry-runs the configuration. The output is a ‘git-diff’ like
+# (wall of) text showing what is to be added, changed, and deleted.
+[~/my_project] terraform plan
 
-# creates the resources according to the plan. In the GCP case, it runs a series of POST requests and follows up and outputs the results.
-[~/] terraform apply
+# creates the resources according to the plan. In the GCP case
+# it runs a series of POST requests and follows up and outputs the results.
+[~/my_project] terraform apply
 
-# optional, destroys the configured resources. Should not be used in production unless you love adrenalin :)
-[~/] terraform destroy
+# optional, destroys the configured resources.
+# Should not be used in production unless you love adrenalin :)
+[~/my_project] terraform destroy
 ```
 
 The workflow for a developer is basically running these commands until you have your desired infrastructure, or your demo-project has served its purpose.
