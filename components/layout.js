@@ -27,33 +27,21 @@ export default function Layout({ children, home }) {
       </Head>
       <header className={styles.header}>
         {home ? (
-          <React.Fragment>
-            <img
-              src="/images/profile.jpg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
-              alt={name}
-            />
-            <h1 className={`${styles.headerText} ${utilStyles.headingXl}`}>
-              {name}
-            </h1>
-          </React.Fragment>
+          <img
+            src="/images/profile.jpg"
+            className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
+            alt={name}
+          />
         ) : (
-          <React.Fragment>
-            <Link href="/">
-              <a>
-                <img
-                  src="/images/profile.jpg"
-                  className={`${styles.headerImage} ${utilStyles.borderCircle}`}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={`${styles.headerText} ${utilStyles.headingLg}`}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
-              </Link>
-            </h2>
-          </React.Fragment>
+          <Link href="/">
+            <a>
+              <img
+                src="/images/profile.jpg"
+                className={`${styles.headerImage} ${utilStyles.borderCircle}`}
+                alt={name}
+              />
+            </a>
+          </Link>
         )}
       </header>
       <div className={styles.contentContainer}>

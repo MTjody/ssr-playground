@@ -1,5 +1,12 @@
 @import "../node_modules/highlight.js/styles/nord.css";
 
+:root {
+  --color-theme: #fcdab7;
+  --color-text: #ececec;
+  --color-primary: #1d2d50;
+  --color-secondary: #133b5c;
+}
+
 html,
 body {
   padding: 0;
@@ -15,8 +22,27 @@ body {
 }
 
 a {
-  color: #0070f3;
+  color: var(--color-theme);
   text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-theme);
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+}
+body {
+  color: var(--color-text);
+  background-color: var(--color-primary) !important;
+}
+
+main {
+  background-color: var(--color-secondary) !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  box-shadow: none !important;
+  border: 1px solid var(--color-theme);
+  border-top: none;
 }
 
 a:hover {
@@ -30,14 +56,16 @@ img {
 
 p > img {
   margin: auto;
+  border: 1px solid var(--color-primary);
 }
 
 blockquote {
-  background: #f0f0f0;
+  background: var(--color-primary);
   padding: 2px 12px;
   border-radius: 4px;
-  border-left: 2px solid;
+  border-left: 4px solid #1e5f74;
   margin: 0;
+  line-height: 1.5;
 }
 
 pre {
@@ -46,4 +74,5 @@ pre {
 
 code {
   font-size: 16px;
+  border: 1px solid var(--color-primary);
 }

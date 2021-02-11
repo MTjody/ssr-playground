@@ -24,6 +24,16 @@
   line-height: 1.5;
 }
 
+.headingSm {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.presentation {
+  padding: 1.5rem;
+  margin-top: 3rem;
+}
+
 .headingTldr {
   font-size: 1.1rem;
   line-height: 1.5;
@@ -53,5 +63,5 @@
 }
 
 .lightText {
-  color: #999;
+  color: #ececec;
 }

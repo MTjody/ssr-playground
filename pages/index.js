@@ -26,22 +26,25 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>
-          I will probably write something here in the future. For now this is
-          the only text you're getting!
-        </p>
+      <section className={utilStyles.headingSm}>
+        <blockquote className={utilStyles.presentation}>
+          Software Developer occasionally writing about... software development
+          stuff!
+        </blockquote>
       </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+      <section className={utilStyles.padding1px}>
         <h2 className={utilStyles.headingLg}>Blog Posts</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
+          {allPostsData.map(({ id, date, title, tldr }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href="/posts/[id]" as={`/posts/${id}`}>
                 <a>{title}</a>
               </Link>
               <br />
               <small className={utilStyles.lightText}>
+                {tldr}
+                <br />
+
                 <Date dateString={date} />
               </small>
             </li>
