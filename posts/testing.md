@@ -1,5 +1,5 @@
 ---
-title: "Automated Testing"
+title: "Automated Testing with NestJS"
 date: "2020-06-26"
 tldr: "You really should test your code!"
 ---
@@ -20,7 +20,7 @@ Oftentimes when writing code, you run your app on changes and use your preferred
 
 ## How
 
-**Examples of abstraction layers** You can use abstraction layers in your codebase which allows for easy mocking in tests. In a REST API application, this can be achieved by dividing the app into:
+**Abstraction layers** can be used in your codebase which allows for easy mocking in tests. In a REST API application, this can be achieved by dividing the app into:
 
 - a route controller which handles routing and parsing the request, and responsible for web exceptions. Here you could e.g. test your requests, and verify which service methods are invoked.
 - a service which handles the business logic, with responsibility for application exceptions. You'd typically test your business logic here. A lot of unit tests and integration tests could be written for this layer.
@@ -34,9 +34,9 @@ Let's look at some code. We'll be looking at tests using [Karma](https://karma-r
 
 1. Import whatever it is you'll be testing
 2. Define your top level test class or function.
-3. Instantiate
-4. (optional) Mock dependencies
-5. Write the tests and what you expect
+3. Instantiate your service(s)
+4. Mock dependencies - if needed
+5. Call a function and check the result against what you expect
 
 ```JavaScript
 // Import whatever it is you're testing
@@ -44,7 +44,7 @@ import { SomeService } from '@app/services/some.service';
 
 // Define your top level function
 describe('SomeService', () => {
-  // Declare your service in a scope which can be reached by all tests in this function
+  // Declare your service in a scope which can be reached by all tests cases
   let service: SomeService;
 
   // This setup function will run before each individual test
@@ -55,12 +55,8 @@ describe('SomeService', () => {
 
   // This teardown function will run after each individual test
   afterEach(() => {
-    cleanUp(); // whatever this could be, e.g. clearing your mocks or tearing down db connections.
-  });
-
-  // Just checking if the class was instantiated at all.
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+    // e.g. clearing your mocks or tearing down db connections.
+    cleanUp();
   });
 
   // You can group your function tests in a nested describe block
@@ -71,7 +67,10 @@ describe('SomeService', () => {
       expect(received).toBe(expected);
     });
     it('should throw an error when given faulty params', () => {
-      expect(service.getSomeValue({requiredValue: null, })).toThrow(new InternalServerError());
+      expect(
+        service.getSomeValue({requiredValue: null, })
+      )
+      .toThrow(new InternalServerError());
     });
   });
 });
@@ -88,8 +87,9 @@ Now consider a service which has dependencies, but they're not relly important t
 describe('SomeService', () => {
   let service: SomeService;
   /*
-  * This object will intercept any invokations on the HttpClients get method and do nothing.
-  * We could also configure it to respond however we'd like, e.g. mocking return values.
+  * This object will intercept any invokations on the HttpClients get
+  * method and do nothing. We could also configure it to respond
+  * however we'd like, e.g. mocking return values.
   */
   const httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
 
@@ -130,7 +130,8 @@ describe("UsersService", () => {
   let usersDaoMock: UsersDaoMock;
 
   beforeEach(async () => {
-    // Test is a NestJS specific module. It mimics NgTest quite well. The function will return a module containing only a service and a dao mock
+    // Test is a NestJS specific module. It mimics NgTest quite well.
+    // The function returns a module containing a service and a dao mock
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
@@ -139,8 +140,8 @@ describe("UsersService", () => {
       ],
     }).compile();
 
-    usersService = module.get < UsersService > UsersService;
-    usersDaoMock = module.get < UsersDaoMock > UsersDaoImpl;
+    usersService = module.get<UsersService> UsersService;
+    usersDaoMock = module.get<UsersDaoMock> UsersDaoImpl;
   });
 
   afterEach(() => {
@@ -151,7 +152,7 @@ describe("UsersService", () => {
   describe("getUserById", () => {
     const id = "jar-jar";
     it("should invoke userDao.getUserById with the provided param", async () => {
-      // jest.fn() creates a spy, similar to the jasmine version in previous examples
+      // similar to jasmine.createSpyObj in previous examples
       usersDaoMock.getUserById = jest.fn();
       await usersService.getUserById(id);
       expect(usersDaoMock.getUserById).toHaveBeenCalledWith(id);

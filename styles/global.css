@@ -43,3 +43,7 @@ blockquote {
 pre {
   overflow: auto;
 }
+
+code {
+  font-size: 16px;
+}
