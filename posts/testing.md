@@ -2,6 +2,7 @@
 title: "Automated Testing with NestJS"
 date: "2020-06-26"
 tldr: "You really should test your code!"
+topics: "Testing, NestJS, Jest"
 ---
 
 ## Disclaimer

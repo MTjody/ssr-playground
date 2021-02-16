@@ -2,6 +2,7 @@
 title: "Introduction to Terraform"
 date: "2020-09-23"
 tldr: "Keeping your Infrastructure as code has several benefits!"
+topics: "IaC, Terraform, GCP, Monitoring"
 ---
 
 ## Understanding

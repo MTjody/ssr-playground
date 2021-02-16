@@ -2,6 +2,7 @@
 title: "Oops - what went wrong?"
 date: "2021-01-15"
 tldr: "Tips and tricks for when things go south!"
+topics: "Programming, Tooling, Debugging, Git"
 ---
 
 ## Ground work

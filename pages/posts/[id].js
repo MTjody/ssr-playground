@@ -17,6 +17,7 @@ export default function Post({ postData }) {
         <div className={utilStyles.lightText}>
           <Date dateString={postData.date} />
           <ReadTime rawText={postData.content} />
+          {postData.topics.split(", ").map((topic, i) => (<Topic key={`post-${topic}-${i}`} topic={topic} />))}
         </div>
         <div className={utilStyles.headingTldr}>TL;DR - {postData.tldr}</div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />

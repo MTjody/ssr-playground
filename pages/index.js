@@ -5,6 +5,7 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
+import Topic from "../components/topic";
 
 // API Calls are a good example for forms.
 /*async function submitForm(e) {
@@ -35,7 +36,7 @@ export default function Home({ allPostsData }) {
       <section className={utilStyles.padding1px}>
         <h2 className={utilStyles.headingLg}>Blog Posts</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title, tldr }) => (
+          {allPostsData.map(({ id, date, title, tldr, topics }) => (
             <li className={utilStyles.listItem} key={id}>
               <Link href="/posts/[id]" as={`/posts/${id}`}>
                 <a>{title}</a>
@@ -46,6 +47,7 @@ export default function Home({ allPostsData }) {
                 <br />
 
                 <Date dateString={date} />
+                {topics.split(", ").map((topic, i) => (<Topic key={`index-${topic}-${i}`} topic={topic} />))}
               </small>
             </li>
           ))}
