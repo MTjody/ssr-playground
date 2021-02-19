@@ -1,7 +1,8 @@
 ---
 title: "Introduction to Terraform"
 date: "2020-09-23"
-tldr: "Keeping your Infrastructure as code has several benefits!"
+description: "Get started with Terraform by setting up monitoring with uptime checks, alert policies and more in GCP."
+tldr: "Terraform describes your infrastructure as code."
 topics: "IaC, Terraform, GCP, Monitoring"
 ---
 

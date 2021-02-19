@@ -1,5 +1,7 @@
+import styles from "./topic.module.css";
+
 export default function Topic({topic}) {
   return (
-    <span>{topic}</span>
+    <span className={styles.topic}>{topic}</span>
   );
 }

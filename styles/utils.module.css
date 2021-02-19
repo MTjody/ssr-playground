@@ -16,7 +16,7 @@
 .headingLg {
   font-size: 1.5rem;
   line-height: 1.4;
-  margin: 1rem 0;
+  margin: 2.5rem 0;
 }
 
 .headingMd {
@@ -32,12 +32,6 @@
 .presentation {
   padding: 1.5rem;
   margin-top: 3rem;
-}
-
-.headingTldr {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  padding: 1.5rem 0; 
 }
 
 .borderCircle {

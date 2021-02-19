@@ -1,5 +1,5 @@
 
-const avgWordsPerMinute = 250;
+const avgWordsPerMinute = 225;
 
 export default function ReadTime({ rawText }) {
     const readTime = approximateReadTime(rawText);

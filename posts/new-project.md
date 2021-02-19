@@ -1,8 +1,9 @@
 ---
 title: "Navigating an assignment"
 date: "2020-12-01"
-tldr: "Identify stakeholders and requirements; ask a lot of questions!"
-topics: "project management"
+description: "Brief guide to starting an assignment and coming out on top, based on observations and own experiences."
+tldr: "Identify stakeholders and requirements; ask questions!"
+topics: "Project management, Interpersonal skills"
 ---
 
 Taking on a new assignment can be a daunting task. There is the social aspect of it, the technical, and the unknown - spooky! Hopefully this post will help prepare for the next time you start anew. Some points are from personal experience, some from discussions with colleagues, and some where I've observed more experienced colleagues.

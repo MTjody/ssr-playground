@@ -2,24 +2,11 @@ import Head from "next/head";
 import Link from "next/link";
 
 import Layout, { siteTitle } from "../components/layout";
+import styles from "./index.module.css";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
-import Topic from "../components/topic";
-
-// API Calls are a good example for forms.
-/*async function submitForm(e) {
-  console.info("form event", e);
-  e.preventDefault();
-  try {
-    const res = await fetch("/api/crapi");
-    console.info("res", res);
-    const data = await res.json();
-    console.info(data);
-  } catch (e) {
-    console.error(e);
-  }
-}*/
+import Topics from "../components/topics";
 
 export default function Home({ allPostsData }) {
   return (
@@ -35,21 +22,23 @@ export default function Home({ allPostsData }) {
       </section>
       <section className={utilStyles.padding1px}>
         <h2 className={utilStyles.headingLg}>Blog Posts</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title, tldr, topics }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href="/posts/[id]" as={`/posts/${id}`}>
-                <a>{title}</a>
-              </Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                {tldr}
-                <br />
+        <ul className={`${styles.blogPosts} ${utilStyles.list}`}>
+          {allPostsData.map(({ id, date, title, description, topics }) => (
+            <Link key={id} href="/posts/[id]" as={`/posts/${id}`}>
+              <li className={`${styles.blogPost} ${utilStyles.listItem}`} >
+                  <a className={styles.title}>{title}</a>
+                <small className={styles.description}>
+                  {description}
+                </small>
+                <small className={styles.date}>
+                  <Date dateString={date} />  
+                </small>
+                <div className={styles.topics}>
+                  <Topics topics={topics}/>
+                </div>
+              </li>
+            </Link>
 
-                <Date dateString={date} />
-                {topics.split(", ").map((topic, i) => (<Topic key={`index-${topic}-${i}`} topic={topic} />))}
-              </small>
-            </li>
           ))}
         </ul>
       </section>
