@@ -1,7 +1,9 @@
 ---
 title: "Oops - what went wrong?"
 date: "2021-01-15"
-tldr: "Tips and tricks for when things go south!"
+description: "Give yourself a head-start in the battle against errors, and what to do when things go south!"
+tldr: "Break down your issue, find the root cause."
+topics: "Tooling, Debugging, Git"
 ---
 
 ## Ground work
@@ -28,6 +30,12 @@ So solve one issue at a time, and divide larger tasks into smaller bits, which c
 
 Now that we've got some solid ground to stand on, let's look into some useful tools when facing unresolved issues.
 
+### Divide and Conquer
+
+Consider a scenario where nothing seems to be working anymore, e.g. your web app does not render anymore. Instead of debugging and printing a bunch of logs you could try to narrow down the issue by removing your code incrementally. Start by removing the latest bits of code that you added, e.g. parts of your new component. Does it work now? No? Keep removing from within your component, and then up the DOM hierarchy until the app renders. Now, start adding small increments of your code again, to see if you can figure out exactly what the issue is.
+
+If you've done this and can't figure out what's wrong, you might be tempted to ask colleagues or the community. In this scenario, you'd help others help you by creating a shareable sandbox of your issue. How much (or how little code) is needed to recreate the issue? When you've got the error environment all setup, there are multiple environments you can use for demonstrating your minimal faulty application, such as [Code Sandbox](https://codesandbox.io/s) or [JSFiddle](https://jsfiddle.net/).
+
 ### Searching effectively
 
 Let's face it, we all lookup our errors on the web using our favorite search provider hoping someone already had our headache to be. So which sources are to be checked, in which order? Here's my take:
@@ -36,12 +44,6 @@ Let's face it, we all lookup our errors on the web using our favorite search pro
 2. Search in [Stackoverflow](https://stackoverflow.com/) or Github/other VCS related issues list. 99% of the errors I've been able to solve have been with the help of searching these forums. Just make sure to check the following: are the users having the same error, with a similar setup? i.e. **is it related to your issue**? The same error message does not automatically mean your underlying issue is the same. Otherwise you might spend hours yanking up the wrong tree, and that's seldom fun.
 
 ![Screenshot of suggested solution - jackpot](/images/what-went-wrong-jackpot.png)
-
-### Divide and Conquer
-
-Consider a scenario where nothing seems to be working anymore, e.g. your web app does not render anymore. Instead of debugging and printing a bunch of logs you could try to narrow down the issue by removing your code incrementally. Start by removing the latest bits of code that you added, e.g. parts of your new component. Does it work now? No? Keep removing from within your component, and then up the DOM hierarchy until the app renders. Now, start adding small increments of your code again, to see if you can figure out exactly what the issue is.
-
-If you've done this and can't figure out what's wrong, you might be tempted to ask colleagues or the community. In this scenario, you'd help others help you by creating a shareable sandbox of your issue. How much (or how little code) is needed to recreate the issue? When you've got the error environment all setup, there are multiple environments you can use for demonstrating your minimal faulty application, such as [Code Sandbox](https://codesandbox.io/s) or [JSFiddle](https://jsfiddle.net/).
 
 ## When all else fails
 

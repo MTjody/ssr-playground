@@ -11,7 +11,7 @@ export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/8bitprofile.svg" />
         <meta
           name="description"
           content="Yeah I'll probably update this one soon™"

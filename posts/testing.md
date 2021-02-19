@@ -1,7 +1,9 @@
 ---
 title: "Automated Testing with NestJS"
 date: "2020-06-26"
-tldr: "You really should test your code!"
+description: "Hands-on look into structuring your tests and mocking dependencies."
+tldr: "Use abstraction layers in your code, mock your dependencies."
+topics: "Testing, NestJS, Jest"
 ---
 
 ## Disclaimer
@@ -61,6 +63,8 @@ describe('SomeService', () => {
 
   // You can group your function tests in a nested describe block
   describe('getSomeValue', () => {
+    // The it-statement is where you describe what you're testing
+    // Reading it should describe what the test is expecting
     it('should return some value which I`m expecting', () => {
       const expected = "some value";
       const received = service.getSomeValue();

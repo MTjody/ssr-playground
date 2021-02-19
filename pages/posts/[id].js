@@ -5,6 +5,8 @@ import { getAllPostIds, getPostData } from "../../lib/posts";
 import Date from "../../components/date";
 import ReadTime from "../../components/readtime";
 import utilStyles from "../../styles/utils.module.css";
+import styles from "./posts.module.css"
+import Topics from "../../components/topics";
 
 export default function Post({ postData }) {
   return (
@@ -13,12 +15,12 @@ export default function Post({ postData }) {
         <title>{postData.title}</title>
       </Head>
       <article>
-        <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>
+        <header className={styles.articleHeader}>
+          <h1 className={`${utilStyles.headingXl} ${styles.title}`}>{postData.title}</h1>
           <Date dateString={postData.date} />
           <ReadTime rawText={postData.content} />
-        </div>
-        <div className={utilStyles.headingTldr}>TL;DR - {postData.tldr}</div>
+        </header>
+        <blockquote className={styles.tldr}>TL;DR - {postData.tldr}</blockquote>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>

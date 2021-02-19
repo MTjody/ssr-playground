@@ -1,0 +1,65 @@
+a.title:hover {
+  text-decoration: none;
+}
+
+.blogPosts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.blogPost {
+  box-shadow: 0 0 4px 8px var(--color-primary);
+  background-color: var(--color-secondary);
+  border-radius: 12px;
+  padding: 18px;
+  min-height: 150px;
+  transition: all 0.2s ease-in-out;
+  display: grid;
+  grid-template: 
+    "title date" minmax(56px, 84px)
+    "desc  desc" minmax(64px, 92px)
+    "topics  topics" minmax(32px, 72px) /
+    1fr 100px;
+}
+
+/** Any rule defined last will be prioritized */
+@media screen and (min-width: 600px) {
+  .blogPosts {
+    grid-template-columns: 1fr 1fr;
+  }
+  .blogPost {
+    grid-template: 
+    "title date" minmax(56px, auto)
+    "desc  desc" minmax(64px, auto)
+    "topics  topics" minmax(32px, auto) /
+    1fr 100px;
+    gap: 12px;
+  }
+}
+
+.blogPost:hover {
+  background-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.blogPost:click {
+  background-color: var(--color-primary);
+}
+
+.title {
+  grid-area: title;
+}
+
+.description {
+  grid-area: desc;
+}
+
+.date {
+  grid-area: date;
+  text-align: right;
+}
+
+.topics {
+  grid-area: topics;
+}
