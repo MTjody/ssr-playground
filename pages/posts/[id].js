@@ -6,7 +6,6 @@ import Date from "../../components/date";
 import ReadTime from "../../components/readtime";
 import utilStyles from "../../styles/utils.module.css";
 import styles from "./posts.module.css"
-import Topics from "../../components/topics";
 
 export default function Post({ postData }) {
   return (
