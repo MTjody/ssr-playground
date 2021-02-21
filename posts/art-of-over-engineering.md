@@ -3,7 +3,7 @@ title: "The art of over-engineering"
 date: "2021-02-21"
 description: "A story about needlessly complicating things and missing the most obvious solution."
 tldr: "Try the easiest things you can think of before looking to complicated solutions"
-topics: "Project management, Problem solving"
+topics: "Problem solving, FaaS, Terraform, GCP"
 ---
 
 ## Bored beyond saving
