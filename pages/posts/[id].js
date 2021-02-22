@@ -12,6 +12,18 @@ export default function Post({ postData }) {
     <Layout>
       <Head>
         <title>{postData.title}</title>
+        <meta
+          property="og:description"
+          content={postData.description}
+        />
+        <meta
+          property="og:image"
+          content={`https://og-image.now.sh/${
+            encodeURI(postData.title)
+          }.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-bw-logo.svg&images=https%3A%2F%2Fmtjody.now.sh%2F8bitprofile.svg&widths=250&widths=250&heights=250&heights=250`}
+        />
+        <meta property="og:title" content={postData.title} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <article>
         <header className={styles.articleHeader}>
