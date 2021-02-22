@@ -79,11 +79,11 @@ Nice, now all I need is a server to host the static files for the wep applicatio
 
 What does this mean? Simply put, the web application is served over HTTPS, and it's blocked from doing unsecure HTTP API calls. The end-user should be certain that their entire session with a HTTPS web app is secure.
 
-So this got me thinking. My initial thought was that one way of solving these types of issues is to setup a proxy server which I'm in control of, and it can make the unsecure API request for me instead. Next, I thought of some awesome [functions as a service](https://vimeo.com/189519556) resources I'd been watching in the previous weeks, and decided that it's the way to go. Since I already have experience with [GCP and Terraform](http://localhost:3000/posts/terraform-intro) I'd be up and running in no time. I just needed a function, and some Terraform configuration.
+So this got me thinking. My initial thought was that one way of solving these types of issues is to setup a proxy server which I'm in control of, and it can make the unsecure API request for me instead. Next, I thought of some awesome [functions as a service](https://vimeo.com/189519556) resources I'd been watching in the previous weeks, and decided that it's the way to go. Since I already have experience with [GCP and Terraform](/posts/introduction-to-terraform) I'd be up and running in no time. I just needed a function, and some Terraform configuration.
 
 ## Solution
 
-In the Terraform configuration, notice the resources needed to get going. The bucket will contain the zip file, which contains the function itself. Next, some details about the function itself, and the IAM bindings needed for permissions to invoke the function. Note the name property of the archive resource, it is a solution for re-deploying your function on changes. If the contents were not hashed and added to the name, there would be no way for Terraform to know that the function needed to re-deploy.
+In the [Terraform configuration](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function), notice the resources needed to get going. The bucket will contain the zip file, which contains the function itself. Next, some details about the function itself, and the IAM bindings needed for permissions to invoke the function. Note the value of the ? `name`-property of the archive resource. It is a solution for re-deploying the function on changes. By hashing the contents and adding the hash to the name, Terraform understands that the archive has changed and needs an update.
 
 ```bash
 resource "google_storage_bucket" "bucket" {
@@ -139,7 +139,7 @@ resource "google_cloudfunctions_function_iam_binding" "binding" {
 }
 ```
 
-The function itself was pretty simple, all it had to do was call the API for me and return the result. When implementing this, I made sure not to depend on any packages so that the function would be as simple as possible to reduce startup latency.
+The function itself was pretty simple, all it had to do was call the API for me and return the result. When implementing this, I made sure not to depend on any packages so that the function would be as simple as possible to avoid depending on other than built-in packages, and also help to reduce startup latency.
 
 ```JavaScript
 const http = require("http");
@@ -177,11 +177,12 @@ exports.boredProxy = (req, res) => {
 };
 ```
 
-I released this bad boy, and the app was up and running. Nice, right? Not really - A couple of days later I talked to a friend about the application and told him about the setup, and showed some of the documentation for the Bored API, for ideas on how to add functionality in the future. What do I see? The documentation showed the URL as `https://www.boredapi.com/api/activity/`. **HTTPS!!!** It was there all along. We had a good laugh and I went on with my life. Covid still reigns supreme though.
+I released this bad boy, and the app was finally up and running. Nice, right? Not really - A couple of days later I talked to a friend about the application and told him about the setup, and showed some of the documentation for the Bored API, for ideas on how to add functionality in the future. What do I see? The documentation I was looking at this time showed the URL as `https://www.boredapi.com/api/activity/`. **HTTPS!!!** It was there all along. We had a good laugh and I went on with my life. Covid still reigns supreme though.
 
 ## Takeaways
 
 There are some valuable lessons to be learned here:
 
-1. The most simple and obvious solution for your current problem is probably right in front of you. Sometimes the spontaneous idea that leverages the cool new tech you recently learnt might be overkill.
-2. Talking to somebody and walking them through your issue could help yourself realise other ways of attacking the problem. This is what is known as [rubber ducking](https://www.urbandictionary.com/define.php?term=Rubber%20ducking) and it's very valuable. The great thing about rubber-ducking is that you don't have to talk to a human or a colleague, it could be a literal rubber duck or a friend. The important part is that you get to explain your problem and sometimes the answer could come to you. If it indeed were a colleague, they might have known about the easier solution as well.
+1. The most simple and obvious solution for your current problem is probably right in front of you. Sometimes the spontaneous idea that leverages the cool new tech you recently learnt might be overkill. You could be better off taking a step back and figuring out what alternatives there are.
+2. Talking to somebody or something and walking them through your issue could help yourself realise other ways of attacking the problem. This is what is known as [rubber ducking](https://www.urbandictionary.com/define.php?term=Rubber%20ducking) and it's very valuable. The great thing about rubber-ducking is that you don't have to talk to a human or a colleague, it could be a literal rubber duck or a friend. The important part is that you get to explain your problem and in that process the answer could come to you.
+3. Working in a group or with colleagues or just about anybody with some knowledge in your domain might give you valuable insights and fill the gaps of your knowledge. Collaboration has proven time and time again to lift me and my teams performance to new levels.
