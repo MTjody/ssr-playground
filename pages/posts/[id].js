@@ -13,7 +13,7 @@ export default function Post({ postData }) {
       <Head>
         <title>{postData.title}</title>
         <meta
-          name="description"
+          property="og:description"
           content={postData.description}
         />
         <meta
@@ -22,7 +22,7 @@ export default function Post({ postData }) {
             encodeURI(postData.title)
           }.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-bw-logo.svg&images=https%3A%2F%2Fmtjody.now.sh%2F8bitprofile.svg&widths=250&widths=250&heights=250&heights=250`}
         />
-        <meta name="og:title" content={postData.title} />
+        <meta property="og:title" content={postData.title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <article>
