@@ -3,8 +3,8 @@ import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 import React from "react";
 
-const name = "@MTJody";
-export const siteTitle = "@MTJody";
+const name = "@MTjody";
+export const siteTitle = "@MTjody";
 
 export default function Layout({ children, home }) {
   return (
