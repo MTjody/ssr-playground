@@ -4,7 +4,7 @@
 }
 
 .contentContainer {
-  max-width: 48rem;
+  max-width: 47rem;
   padding: 0 1rem;
   margin: 0 auto;
 }
@@ -16,13 +16,13 @@
 }
 
 .headerImageContainer {
-  transform: translatey(4rem);
+  transform: translatey(3rem);
   z-index: 1;
 }
 
 .headerImage {
-  width: 8rem;
-  height: 8rem;
+  width: 7rem;
+  height: 7rem;
   transition: all 0.2s ease-in-out;
 }
 
@@ -32,10 +32,10 @@
 }
 
 .headerHomeImage {
-  transform: translatey(4rem);
+  transform: translatey(3rem);
   z-index: 1;
-  width: 8rem;
-  height: 8rem;
+  width: 7rem;
+  height: 7rem;
 }
 
 .headerText {
