@@ -12,7 +12,7 @@ export default function Layout({ children, home }) {
       <header className={styles.header}>
         {home ? (
           <img
-            src="/images/profile.jpg"
+            src="/8bitprofile.svg"
             className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
             alt={name}
           />
@@ -20,7 +20,7 @@ export default function Layout({ children, home }) {
           <Link href="/">
             <a className={styles.headerImageContainer}>
               <img
-                src="/images/profile.jpg"
+                src="/8bitprofile.svg"
                 className={`${styles.headerImage} ${utilStyles.borderCircle}`}
                 alt={name}
               />

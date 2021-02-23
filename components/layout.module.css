@@ -16,25 +16,26 @@
 }
 
 .headerImageContainer {
-  transform: translatey(3rem);
+  transform: translatey(4rem);
   z-index: 1;
 }
 
 .headerImage {
-  width: 6rem;
-  height: 6rem;
+  width: 8rem;
+  height: 8rem;
   transition: all 0.2s ease-in-out;
 }
 
 .headerImage:hover {
-  box-shadow: 0 0 4px 1px var(--color-theme);
+  /* TODO clip path? */
+  /* box-shadow: 0 0 4px 1px var(--color-theme); */
 }
 
 .headerHomeImage {
-  transform: translatey(3rem);
+  transform: translatey(4rem);
   z-index: 1;
-  width: 6rem;
-  height: 6rem;
+  width: 8rem;
+  height: 8rem;
 }
 
 .headerText {
