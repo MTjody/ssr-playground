@@ -2,7 +2,7 @@
 title: "Class Accessors in TS break tree-shaking!"
 date: "2021-03-15"
 description: "TypeScript compiles your code to JS, but do you know what that code looks like, and what implications it might have?"
-tldr: "Accessor properties in TS result in Object.defineProperty, which bundlers deem to side-effectful to tree-shake."
+tldr: "Accessor properties in TS result in Object.defineProperty, which bundlers deem too side-effectful to tree-shake."
 topics: "Tree-shaking, TypeScript, Yak-shaving"
 ---
 
