@@ -20,7 +20,7 @@ In my assignment, we were creating a web application where a small bundle size w
 I noticed something right away, the webpack config looked like this:
 
 ```JavaScript
-// awesome-library/webpack.config.js
+// webpack.config.js
 
 module.exports = {
   // omitted
@@ -62,7 +62,7 @@ So, still without results, I thought that if I make the library output an ES Mod
 So I upgraded TS to the latest version and voilá, no errors. Nice! I was so close I could taste it. The promise of optimized code and small bundles kept my fire burning. Alas, the build failed due to the library importing certain files as strings using the webpack raw-loader.
 
 ```JavaScript
-// awesome-library/webpack.config.js
+// webpack.config.js
 
 module.exports = {
   // omitted
