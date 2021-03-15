@@ -77,7 +77,9 @@ module.exports = {
 }
 ```
 
-I mean, there's nothing wrong with raw-loader, but being in the hurry that I was I just wanted to get this over with. Some light googling and I had written an inline Rollup plugin to solve this. Let's go! Running Rollup again. It worked! But the bundle is still 2MB even after using the new ES Module version and I'm running out of patience. There was one warning with the Rollup output (that I chose to ignore). It had detected some circular dependencies. I thought that if I solved those, surely the built library would be tree-shakable? Nope. Still the same result. So I started googling again, as one does. I found [Agadoo](https://github.com/Rich-Harris/agadoo), which tells you if your library is tree-shakable. It told me the library wasn't tree-shakable _[SAD NOISES]_.
+I mean, there's nothing wrong with raw-loader, but being in the hurry that I was I just wanted to get this over with. Some light googling and I had written an inline Rollup plugin to solve this. Let's go! Running Rollup again. It worked! But the bundle is still 2MB even after using the new ES Module version and I'm running out of patience. There was one warning with the Rollup output (that I chose to ignore). It had detected some circular dependencies. I thought that if I solved those, surely the built library would be tree-shakable? Nope. Still the same result. So I started googling again, as one does. I found [Agadoo](https://github.com/Rich-Harris/agadoo), which tells you if your library is tree-shakable. It told me the library wasn't tree-shakable. 
+
+_[SAD NOISES]_
 
 ## Endgame
 
