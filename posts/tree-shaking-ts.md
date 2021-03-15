@@ -1,0 +1,107 @@
+---
+title: "Class Accessors in TS break tree-shaking!"
+date: "2021-03-15"
+description: "TypeScript compiles your code to JS, but do you know what that code looks like, and what implications it might have?"
+tldr: "Accessor properties in TS result in Object.defineProperty, which bundlers deem to side-effectful to tree-shake."
+topics: "Tree-shaking, TypeScript, Yak-shaving"
+---
+
+## Terminology and context
+
+[Tree-shaking](https://en.wikipedia.org/wiki/Tree_shaking): When building a JavaScript application for the web, chances are you're using OSS packages from NPM and bundling your web application using e.g. WebPack or Rollup. Some of your dependencies might be huge in size, which could create a slow initial experience for your end-users. To negate this, you could use a bundler which has support for Tree-shaking. The bundler will analyze your code and eliminate dead code which could mean significant reduction in bundle size resulting in a faster loading web app.
+
+
+[Yak-shaving](https://www.urbandictionary.com/define.php?term=yak%20shaving): My seemingly simple task of reducing our bundle size resulted in me solving tasks to solve the tasks needed to solve my inital task of reducing the bundle size. The whole ordeal is similar to when you're telling a story and go on a tangent, only to try and return to your story but feeling lost and ultimately giving up on life. What was the point I was trying to make again..?
+
+## How my Yak was shaved
+
+In my assignment, we were creating a web application where a small bundle size was important. The bundle we created consisted of 99% (one singular) dependency, where we only used trace amounts of the library to begin with. A **prime candidate for some tree-shaking** if you ask me. In my attempt to reduce the bundle size, I did some investigative work in the library repo, as I was under the impression that tree-shaking was automatically applied if possible. We were only using two enums and a class but the whole library was included - resulting in a 2MB bundle (!).
+
+I noticed something right away, the webpack config looked like this:
+
+```JavaScript
+// awesome-library/webpack.config.js
+
+module.exports = {
+  // omitted
+  output: {
+    filename: 'awesome-library.js',
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'umd', // <---- DAMN YOU!
+  },
+}
+```
+
+The library target was set to UMD, which is not tree-shakeable since a bundler can't determine what is loaded due to UMD imports can be dynamic. There are an infinite amount of blogposts detailing the different import / export types in JavaScript, so I'll spare you the details in this post. Just know that only [ES2015 type import exports are tree-shakeable](https://webpack.js.org/guides/tree-shaking/). 
+
+"Big deal, just change it to "module" and you're good!". Well yes, but actually no:
+
+```JSON
+// package.json
+{
+  devDependencies: {
+    // omitted
+    "webpack": "^4.39.3", // <---- DAMN YOU!
+  }
+}
+```
+Looking at the documentation we can see that only [Webpack 5](https://webpack.js.org/configuration/output/#librarytarget-module) has support for outputting es-module code, and that behind an experimental flag! Does not feel nice does it? Just in order to test this, I opted to upgrade the webpack dependency, but quckly ran into errors, warnings about deprecation etc which frightened me since the library is used by several other projects. I can't imagine being the one to push those changes without being able to predict exactly what will happen.
+
+So, still without results, I thought that if I make the library output an ES Module alongside the UMD, no harm will be done, and as I didn't want to be responsible for breaking stuff I opted to try using Rollup. The promise of an easy setup and excellent track-record and documentation was appealing. So adding Rollup and the config needed, I encountered an error in TypeScript compatibility with rollup.
+
+```JSON
+// package.json
+{
+  devDependencies: {
+    // omitted
+    "typescript": "^3.6.2", // <---- DAMN YOU!
+  }
+}
+```
+
+So I upgraded TS to the latest version and voilá, no errors. Nice! I was so close I could taste it. The promise of optimized code and small bundles kept my fire burning. Alas, the build failed due to the library importing certain files as strings using the webpack raw-loader.
+
+```JavaScript
+// awesome-library/webpack.config.js
+
+module.exports = {
+  // omitted
+  module: {
+    rules: [
+      {
+        test: /\.secret-file-ending$/i,
+        loader: 'raw-loader', // <---- DAMN YOU!
+      },
+    ],
+  },
+}
+```
+
+I mean, there's nothing wrong with raw-loader, but being in the hurry that I was I just wanted to get this over with. Some light googling and I had written an inline Rollup plugin to solve this. Let's go! Running Rollup again. It worked! But the bundle is still 2MB even after using the new ES Module version and I'm running out of patience. There was one warning with the Rollup output (that I chose to ignore). It had detected some circular dependencies. I thought that if I solved those, surely the built library would be tree-shakable? Nope. Still the same result. So I started googling again, as one does. I found [Agadoo](https://github.com/Rich-Harris/agadoo), which tells you if your library is tree-shakable. It told me the library wasn't tree-shakable _[SAD NOISES]_.
+
+## Endgame
+
+Agadoo didn't tell me why, it just said it couldn't be done. But using Agadoo, I had just increased the speed of my feedback loop significantly. I started searching for non-tree-shakable JavaScript code. [One issue in the Rollup repo](https://github.com/rollup/rollup/issues/1130) described that `Object.defineProperty` kills tree-shaking - the more you know! But the library source code didn't use that. But do you know what did? The transpiled code! As I looked at the transpiled code I found, among other things, 752 instances of `Object.defineProperty`. Where were they coming from? The same issue thread had [this comment](https://github.com/rollup/rollup/issues/1130#issuecomment-459369686), which paraphrased:
+
+> Using TypeScript [Class accessors](https://www.typescriptlang.org/docs/handbook/2/classes.html#getters--setters) will result in `Object.defineProperty` for the transpiled code.
+
+```JavaScript
+class Example {
+  get prop() { return true; }
+}
+
+// Transpiles to
+function Example() { }
+Object.defineProperty(Example.prototype, "prop", { // <---- DAMN YOU!
+  get: function () { return true; },
+  enumerable: true,
+  configurable: true
+});
+```
+
+
+Now where to go from here? If the library is concerned about its users being able to tree-shake unnecessary code, they should probably
+1. stop using TS Class Accessors immediately
+2. start replacing the accessors with an equal alternative
+
+As for our bundle? I'm not sure right now, no happy ending here. We're considering copying the source code for the few parts we actually use. This is a decision we're not taking lightly, as it is terrible from many perspectives: If our app decides to use more features from the library, or if the library should be updated often, it would quickly snowball into maintenance hell trying to keep our source code in sync. But it might be a necessary evil for now, considering how small our dependency is.
