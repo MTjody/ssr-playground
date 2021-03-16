@@ -85,15 +85,19 @@ code.hljs {
   background-color: #111111;
   border-radius: 12px;
   padding: 1rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
-code.hljs::before {
+main > article > div > pre::before {
   content: '';
   display: flex;
   background-image: url("/images/dots.png");
   background-size: contain;
   background-repeat: no-repeat;
-  height: 16px;
-  margin-left: -5px;
-  margin-bottom: 1rem;
+  background-color: black;
+  height: 12px;
+  padding: 4px;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
 }
