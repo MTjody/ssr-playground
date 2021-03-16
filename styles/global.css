@@ -95,9 +95,10 @@ main > article > div > pre::before {
   background-image: url("/images/dots.png");
   background-size: contain;
   background-repeat: no-repeat;
-  background-color: black;
-  height: 12px;
-  padding: 4px;
+  background-color: #000000;
+  background-origin: content-box;
+  height: 18px;
+  padding: 10px;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
 }
