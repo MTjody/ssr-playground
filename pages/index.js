@@ -26,8 +26,7 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingSm}>
         <blockquote className={utilStyles.presentation}>
-          Software Developer occasionally writing about... software development
-          stuff!
+          Hi! 👋 I'm a software developer in Sweden writing about whatever comes to mind. Give my blog a read will you? I'd love some feedback!
         </blockquote>
       </section>
       <section className={utilStyles.padding1px}>

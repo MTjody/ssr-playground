@@ -18,8 +18,19 @@ html {
 }
 
 body {
-  background-image: url(https://www.transparenttextures.com/patterns/stardust.png);
+  position: relative;
   color: var(--color-text);
+}
+
+body::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  background-image: url(https://www.transparenttextures.com/patterns/stardust.png);
+  opacity: 0.85;
 }
 
 html,
@@ -87,6 +98,9 @@ code.hljs {
   padding: 1rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+main > article > div > p {
+  line-height: 1.85;
 }
 
 main > article > div > pre::before {
