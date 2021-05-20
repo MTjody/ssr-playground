@@ -1,5 +1,5 @@
 ---
-title: "Github Actions - Trying Workflows before merge"
+title: "Github Actions - Developing Workflows before merge"
 date: "2021-05-20"
 description: "How to test your GH Actions Workflows before merging to your main branch."
 tldr: "Commit a dummy workflow to main, develop and trigger manually from another branch"
@@ -66,12 +66,16 @@ Let's work on the new workflow in the feature-branch, create a Pull Request and 
 
 ```bash
 # Terminal
-[~/my_project:(main)] git checkout -b"infra_build_workflow"
-> Switched to a new branch 'infra_build_workflow'
+[~/my_project:(main)] git checkout -b"infra/build_workflow"
+> Switched to a new branch 'infra/build_workflow'
 # ... now make your changes, and push the changes to try it out
-[~/my_project:(infra_build_workflow)] git add .github/workflows/build.yml
-[~/my_project:(infra_build_workflow)] git commit -m"Update workflow"
-[~/my_project:(infra_build_workflow)] git push origin/infra_build_workflow
+[~/my_project:(infra/build_workflow)] git add .github/workflows/build.yml
+[~/my_project:(infra/build_workflow)] git commit -m"Update workflow"
+[~/my_project:(infra/build_workflow)] git push origin infra/build_workflow
 ```
 
-You can now select the workflow in the list, and choose what branch to run it from.
+You can now select the workflow from the list using the name provided in the .yml-file.
+
+![Run workflow from working branch](/images/yes-action-workflow.png)
+
+Once selected, choose what branch to run it from, and now you're ready to incrementally add steps and jobs to your workflow on your working branch! For more information on how to setup a Github Actions Workflow, please refer to the [documentation](https://docs.github.com/en/actions). In an upcoming post, we'll take a look at how to parallelise your build and make use of the Github Actions runner cache to speed up builds!
