@@ -3,7 +3,7 @@ title: "Eight commandments of great leadership"
 date: "2021-04-06"
 description: "Introspection of what I'd like to see from a leader, and what I strive to accomplish as a leader."
 tldr: "Lead by example, be passionate and understanding, set goals and trust your colleagues!"
-topics: "Team-building, Leadership, Interpersonal skills"
+topics: "Leadership, Interpersonal skills"
 ---
 
 ## Listen
@@ -29,7 +29,7 @@ Setting and following up on goals is a much discussed topic but I'm not going in
 Being the great leader that you are, you should of course try to empower and enable your talented colleague to achieve their goals. Setup regular follow-ups where you discuss the progress and if there is anything you can do to help them achieve their goals and aspirations. There are a lot of ways you could be of help, e.g:
 
 - find a specialized mentor who could help them grow in a certain area,
-- provide access to continuous learning for relevant courses that are interesting. 
+- provide access to continuous learning for relevant courses that are interesting.
 - setup a book club at the workplace and get your colleagues to self-organize.
 
 If you're the greatest of leaders, you should let them do these courses as part of their work hours. Investing just two hours per week results in ~90hrs per year, and could be the spark which ignites the flames of innovation. It's a win-win which hopefully could help with reducing employee churn as well, since these types of benefits typically increase employee satisfaction.
@@ -38,7 +38,7 @@ If you're the greatest of leaders, you should let them do these courses as part 
 
 > _Thine passion should overflow onto thy team_
 
-If you're passionate about your work, chances are you're going to attract passionate co-workers. In the best of worlds it triggers a positive feedback-loop where you'd pick each other up when you're experiencing downs. This one is more difficult to provide concrete pointers for, but imagine the case where you have a monotonous leader who talks about their company and common goals only on special occasions with little conviction. Now imagine someone who is determined and energetic when presenting their many ideas and possibilities week after week. 
+If you're passionate about your work, chances are you're going to attract passionate co-workers. In the best of worlds it triggers a positive feedback-loop where you'd pick each other up when you're experiencing downs. This one is more difficult to provide concrete pointers for, but imagine the case where you have a monotonous leader who talks about their company and common goals only on special occasions with little conviction. Now imagine someone who is determined and energetic when presenting their many ideas and possibilities week after week.
 
 ## Adapt
 
@@ -59,6 +59,5 @@ Honestly, your colleagues managed to go through a cohesive people-filtering proc
 > _Engageth in team activities_
 
 ![The Joker - Why so serious](/images/leadership-why-so-serious.gif)
-
 
 Show your colleagues that it's possible to have a work-life balance, and encourage your team to strive for it. Work already takes up so much of our time, both in actually _being at work_ but also it's sometimes living rent-free in our minds long into the night. One way of doing this is arranging casual kick-off-style meetings where the goal is to simply be together and do something other than work. Playing board games, meeting up at a bar, trying your skills at an escape room are just some examples of activities. Team-building is very important for your wellbeing and it most likely improves team performance. Hopefully it also results in less colleague churn and less time spent onboarding new members. The fun times are what keeps us going through tougher times and will also leave lasting memories long after you're no longer working together.
