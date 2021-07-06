@@ -167,6 +167,10 @@ jobs:
 
 Now, how do we get the jobs to run in parallel? Simply by declaring several jobs (as opposed to one almighty job), and specifying which job needs which in order to run, we get the runners to run in parallell. Note how `UnitTest`, `E2ETest`, and `StaticAnalysis` all declare a dependency on `Setup`, this ensures they will run independent from each other.
 
+It is also possible for a job to not be referenced by other jobs, and not specify any needs. This type of job will also run in parallel but won't affect or depend on the others. It's clearly a separate island in the workflow depiction below:
+
+![Github Actions Workflow Overview](/images/github-actions-p2.png)
+
 Another benefit from this compared to a single huge job is that when one step fails, the whole workflow isn't cancelled. This means that e.g. if the static code analysis fails, we'll still know if the unit tests and E2E tests passed, as opposed to finding that out once the static analysis passes.
 
 ## What the future holds
