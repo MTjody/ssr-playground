@@ -78,4 +78,6 @@ You can now select the workflow from the list using the name provided in the .ym
 
 ![Run workflow from working branch](/images/yes-action-workflow.png)
 
-Once selected, choose what branch to run it from, and now you're ready to incrementally add steps and jobs to your workflow on your working branch! For more information on how to setup a Github Actions Workflow, please refer to the [documentation](https://docs.github.com/en/actions). In an upcoming post, we'll take a look at how to parallelise your build and make use of the Github Actions runner cache to speed up builds!
+Once selected, choose what branch to run it from, and now you're ready to incrementally add steps and jobs to your workflow on your working branch! For more information on how to setup a Github Actions Workflow, please refer to the [documentation](https://docs.github.com/en/actions).
+
+In [this post](/posts/github-actions-p2), we'll take a look at how to parallelise your build and make use of the Github Actions runner cache to speed up builds!
