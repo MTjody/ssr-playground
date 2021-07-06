@@ -42,6 +42,13 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+  UnimportantStep:
+    runs-on: ubuntu-latest
+    steps:
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
   Build:
     needs: [StaticAnalysis, UnitTest, E2ETest]
     runs-on: ubuntu-latest
