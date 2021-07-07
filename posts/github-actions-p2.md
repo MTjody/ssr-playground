@@ -47,7 +47,7 @@ jobs:
     needs: [StaticCodeAnalysis, UnitTests, E2ETests]
 ```
 
-Each job runner needs to run on something, e.g. a predefined OS or container. A list of available runners can be found here. This is set by the `runs-on` keyword. If you want to mix parallel and sequential jobs, you can use the `needs` keyword. It specifies which jobs need to be completed before that job runs. In the example above, we see that the Setup job precedes the code quality related jobs, and the build needs all those to complete before triggering.
+Each job runner needs to run on something, e.g. a predefined OS or container. A list of available runners can be found [here](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources). This is set by the `runs-on` keyword. If you want to mix parallel and sequential jobs, you can use the `needs` keyword. It specifies which jobs need to be completed before that job runs. In the example above, we see that the Setup job precedes the code quality related jobs, and the build needs all those to complete before triggering.
 
 ## The Setup Job
 
