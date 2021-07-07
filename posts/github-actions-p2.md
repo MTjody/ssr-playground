@@ -173,6 +173,8 @@ It is also possible for a job to not be referenced by other jobs, and not specif
 
 Another benefit from this compared to a single huge job is that when one step fails, the whole workflow isn't cancelled. This means that e.g. if the static code analysis fails, we'll still know if the unit tests and E2E tests passed, as opposed to finding that out once the static analysis passes.
 
+In my latest project, using the cache resulted in a drastic performance boost for the installation step. Without the cache, the installation took ~2min 30s. When adding the yarn.lock cache it went down to 1min. When caching both the yarn.lock and node_modules it only took 2s. **That's 75x faster**! The trade-off comes in the cache-retrieval though, which now takes ~30s, but that's still a massive improvement overall (5x). Also note that if your dependencies are updated, the yarn.lock will have been updated, leading to a new cache which results in a slower `Setup` job.
+
 ## What the future holds
 
 In an upcoming post, we'll look into how to setup "job guards" which require manual approval in order to run, these can typically be used in a deployment scenario where you'd want some reviewer(s) to make sure everything is in order.
