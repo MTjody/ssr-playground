@@ -1,7 +1,3 @@
-a.title:hover {
-  text-decoration: none;
-}
-
 .blogPosts {
   display: grid;
   grid-template-columns: 1fr;
@@ -36,15 +32,6 @@ a.title:hover {
     1fr 100px;
     gap: 12px;
   }
-}
-
-.blogPost:hover {
-  background-color: var(--color-primary);
-  cursor: pointer;
-}
-
-.blogPost:click {
-  background-color: var(--color-primary);
 }
 
 .title {
