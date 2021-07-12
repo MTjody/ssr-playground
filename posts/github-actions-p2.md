@@ -98,8 +98,9 @@ The next two steps are for the cache, and since we use yarn here we first set th
 - `node_modules` - contains all dependencies and their binaries. This will take up quite a lot of space so make sure you're within the Github Actions cache limit.
 - the Cypress cache - We're using Cypress for our E2E tests. Without this cached, this error was thrown:
 
-> _The cypress npm package is installed, but the Cypress binary is missing._ > _We expected the binary to be installed here: /home/runner/.cache/Cypress/7.3.0/Cypress/Cypress_ > _Reasons it may be missing:_
->
+> _The cypress npm package is installed, but the Cypress binary is missing._
+> _We expected the binary to be installed here: /home/runner/.cache/Cypress/7.3.0/Cypress/Cypress_ 
+> _Reasons it may be missing:_
 > - _You're caching 'node_modules' but are not caching this path: /home/runner/.cache/Cypress_
 > - _You ran 'npm install' at an earlier build step but did not persist: /home/runner/.cache/Cypress_
 >
