@@ -90,7 +90,7 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
 ```
 
-Each step in a job is an entry in the `steps` list. The name property will be shown in the Github Actions GUI. The GUI will show the action `uses` identifier if name is omitted. Since we're working on the repository with yarn commands, the runner must have access to the code, this is what the checkout step is for. The `setup-node` action with node version 14 has yarn enabled by default.
+Each step in a job is an entry in the `steps` list. The name property will be shown in the Github Actions GUI. The GUI will show that the action `uses` identifier if name is omitted. Since we're working on the repository with yarn commands, the runner must have access to the code, this is what the checkout step is for. The `setup-node` action with node version 14 has yarn enabled by default.
 
 The next two steps are for the cache, and since we use yarn here we first set the yarn cache directory so that the `cache@v2` action can use it. The cache action has recently enabled multiple directories, and for this setup we'll add:
 
@@ -114,7 +114,7 @@ In the UnitTest job below, note a few things:
 
 1. we specify that it's dependant on `Setup` job, this ensures that Setup must complete successfully before UnitTest starts.
 2. we need to checkout the code, retrieve the cahce and perform an install again. We tell yarn to install from the local cache by passing the `--prefer-offline` argument.
-3. If we were to omit the cache and install, the `yarn test` would likely trigger something like `jest`, which wouldn't exist in this Github actions runner, since each runner is a separate fresh instance.
+3. If we were to omit the cache and install, the `yarn test` would likely trigger something like `jest`, which wouldn't exist in this Github Actions runner, since each runner is a separate fresh instance.
 
 ```yml
 # .github/workflows/build.yml
