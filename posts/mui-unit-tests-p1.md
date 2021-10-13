@@ -1,0 +1,129 @@
+---
+title: "Material UI unit tests - getting started"
+date: "2021-10-13"
+description: "Let's explore writing unit tests for the front-end using MUI, React and Testing Library"
+tldr: "Testing-library is a great tool for component-based UI tests!"
+topics: "Testing, Jest, React"
+---
+
+
+Let's do a hands-on series of posts this time. The source code for the tests is in [this repository](https://github.com/MTjody/unit-tests) for you to check out (ha!). This is the first of two posts on this topic. This one will be about getting started and the general guidelines for writing component unit tests, and in the second one we'll write clean UI tests that make sense.
+
+We'll be using [testing library](https://testing-library.com/), which encourages writing UI tests which mimic the way user interacts with your application. It has accessibility in mind as it's opinionated in what [type of selectors](https://testing-library.com/docs/queries/about#priority) you should use.
+
+## Writing UI unit tests
+
+When setting up UI unit tests, you'd usually do something like the following:
+
+1. Prepare the environment, e.g. render your component that you're testing, with the properties it needs to render.
+2. Interact with the component, e.g. focus and type something in a textfield and hitting enter
+3. Expect to see a change in the UI, e.g. the textfield is no longer in focus and the value has been set.
+
+When doing this with component based UI libraries such as React, you need to look past the React component and actually test what is in [the DOM](https://en.wikipedia.org/wiki/Document_Object_Model). The DOM is the technical term for what structure your website / webapp has, i.e. which HTML elements it consists of.
+
+In short, you should try to find your HTML elements by getting them in an accessible-friendly way. E.g. prefer getting your element by role or label instead of an arbitrary test-id. The role or label would be how your users choose to interact with the elements. On the flip-side they wouldn't ever know about your test-ids.
+
+> "The more your tests resemble the way your software is used, the more confidence they can give you."
+> 
+> [Testing Library](https://testing-library.com/)
+
+## Front-end unit test tooling
+
+Testing-library exposes some tools for us to do this. Let's look at some of them. For this walkthrough, we'll run tests against MUI react components. This due to MUI's popularity and using actual examples is a lot more exciting than a bunch of useless `<MyComponent>` components.
+
+```JavaScript
+import { render, screen } from '@testing-library/react';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+```
+
+`render` takes a React component and you guessed it, renders it into the DOM. The result is a DOM with HTML elements in your current unit test.
+
+`screen` is a that exposes the methods we use to get certain elements, and we also use it do debug the DOM.
+
+We'll use these two methods to setup our tests. Time for a non-scientific statistic: the majority of modern react apps use Jest for running and writing unit tests. I back this up with the fact that it comes out of the box with CRA, and I've exclusively seen Jest used it in the wild for the last five years. The way we structure tests is we use `describe` blocks to group tests related to a feature, and `it` - statements to define our unit-tests. Both these methods take callback methods where our tests are run, which creates a nice little tree of tests. You can nest multiple describe blocks if it makes sense, but you can't nest it-statements. 
+
+```JavaScript
+describe("MUI AutoComplete", () => {
+	describe("Combo box", () => { /* TODO */ })
+	describe("Free Solo", () => { /* TODO */ })
+	describe("Grouped", () => { /* TODO */ })
+})
+```
+
+Here we have nested the describe blocks which are related to each major type of the Autocomplete component. The it-statements inside each nested describe block would then test the corresponding type.
+
+## OK let's test already
+
+Yeah just two more things which are good to know before testing, firstly what is the AutoComplete?
+
+> The autocomplete is a normal text input enhanced by a panel of suggested options.
+> 
+
+And second, what's the combo box variation?
+
+> The value must be chosen from a predefined set of allowed values.
+> 
+
+With these two pieces of information, we now design our tests to verify a couple of things:
+
+1. The autocomplete is rendered without any issues. This type of 'is rendered' test is a sane starting point. It helps rule out the most basic issues if there are any.
+2. The resulting input field is focusable, and you can type in it.
+
+This is a good starting point, so let's get going with the tests.
+
+```JavaScript
+// unit-tests/mui-tests/Autocomplete.spec.tsx
+// imports omitted for brevity
+describe("MUI AutoComplete", () => {
+	describe("Combo box", () => { 
+		it("should render an input field", () => {
+			const { container, getByLabelText, debug } = render(
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={top10Films}
+          renderInput={(params) => <TextField {...params} label="Movie" />}
+        />
+      );
+      const res = getByLabelText("Movie");
+      // Uncomment to see the DOM printout of the input.
+			// omit the res param to see the whole DOM tree.
+      // debug(res);
+      expect(container).toBeVisible();
+      expect(res).toBeVisible();
+		})
+	})
+})
+```
+
+If we run this test using the terminal, we get the following output.
+
+```bash
+➜  unit-tests git:(main) ✗ npm t           
+
+> unit-tests@1.0.0 test
+> jest
+
+ PASS  mui-tests/Autocomplete.spec.tsx
+  MUI AutoComplete
+    Combo box
+      ✓ should render an input field (218 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.819 s, estimated 2 s
+Ran all test suites.
+```
+
+The hierarchy of the describe statements will start to make sense the more unit tests we add as they will simply be more checkboxes underneath e.g. Combo Box. And as a reader if this report, we get a nice overview of which tests pass / fail / are suspended.
+
+The source code for this can be found at this repository, and it's all setup for you to get the tests running.
+
+```JavaScript
+git clone https://github.com/MTjody/unit-tests.git
+cd unit-tests
+npm i
+npm t
+```
