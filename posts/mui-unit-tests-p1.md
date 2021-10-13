@@ -6,7 +6,6 @@ tldr: "Testing-library is a great tool for component-based UI tests!"
 topics: "Testing, Jest, React"
 ---
 
-
 Let's do a hands-on series of posts this time. The source code for the tests is in [this repository](https://github.com/MTjody/unit-tests) for you to check out (ha!). This is the first of two posts on this topic. This one will be about getting started and the general guidelines for writing component unit tests, and in the second one we'll write clean UI tests that make sense.
 
 We'll be using [testing library](https://testing-library.com/), which encourages writing UI tests which mimic the way user interacts with your application. It has accessibility in mind as it's opinionated in what [type of selectors](https://testing-library.com/docs/queries/about#priority) you should use.
@@ -45,9 +44,9 @@ We'll use these two methods to setup our tests. Time for a non-scientific statis
 
 ```JavaScript
 describe("MUI AutoComplete", () => {
-	describe("Combo box", () => { /* TODO */ })
-	describe("Free Solo", () => { /* TODO */ })
-	describe("Grouped", () => { /* TODO */ })
+  describe("Combo box", () => { /* TODO */ })
+  describe("Free Solo", () => { /* TODO */ })
+  describe("Grouped", () => { /* TODO */ })
 })
 ```
 
@@ -55,7 +54,7 @@ Here we have nested the describe blocks which are related to each major type of 
 
 ## OK let's test already
 
-Yeah just two more things which are good to know before testing, firstly what is the AutoComplete?
+Just two more things which are good to know before writing our unit tests. Firstly: what is the AutoComplete component?
 
 > The autocomplete is a normal text input enhanced by a panel of suggested options.
 > 
@@ -76,9 +75,9 @@ This is a good starting point, so let's get going with the tests.
 // unit-tests/mui-tests/Autocomplete.spec.tsx
 // imports omitted for brevity
 describe("MUI AutoComplete", () => {
-	describe("Combo box", () => { 
-		it("should render an input field", () => {
-			const { container, getByLabelText, debug } = render(
+  describe("Combo box", () => {
+    it("should render an input field", () => {
+      const { container, getByLabelText, debug } = render(
         <Autocomplete
           disablePortal
           id="combo-box-demo"
@@ -86,20 +85,37 @@ describe("MUI AutoComplete", () => {
           renderInput={(params) => <TextField {...params} label="Movie" />}
         />
       );
-      const res = getByLabelText("Movie");
+      const inputField = getByLabelText("Movie");
       // Uncomment to see the DOM printout of the input.
-			// omit the res param to see the whole DOM tree.
+      // omit the res param to see the whole DOM tree.
       // debug(res);
       expect(container).toBeVisible();
-      expect(res).toBeVisible();
-		})
-	})
+      expect(inputField).toBeVisible();
+    })
+    it("should allow focus and typing on the text input", () => {
+      const { getByLabelText } = render(
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={top10Films}
+          renderInput={(params) => <TextField {...params} label="Movie" />}
+        />
+      );
+      const textInput = getByLabelText("Movie");
+      userEvent.click(textInput);
+      expect(textInput).toHaveFocus();
+      // I usually don't write 'magic strings' but if I extract
+      // to constant it breaks my fancy color theme ¯\_(ツ)_/¯
+      userEvent.type(textInput, "Some movie name");
+      expect(textInput).toHaveValue("Some movie name");
+    })
+  })
 })
 ```
 
 If we run this test using the terminal, we get the following output.
 
-```bash
+```terminal
 ➜  unit-tests git:(main) ✗ npm t           
 
 > unit-tests@1.0.0 test
@@ -108,22 +124,16 @@ If we run this test using the terminal, we get the following output.
  PASS  mui-tests/Autocomplete.spec.tsx
   MUI AutoComplete
     Combo box
-      ✓ should render an input field (218 ms)
+      ✓ should render an input field (159 ms)
+      ✓ should allow focus and typing on the text input (391 ms)
 
 Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
+Tests:       2 passed, 2 total
 Snapshots:   0 total
-Time:        1.819 s, estimated 2 s
-Ran all test suites.
+Time:        2.919 s
+Ran all test suites related to changed files.
 ```
 
-The hierarchy of the describe statements will start to make sense the more unit tests we add as they will simply be more checkboxes underneath e.g. Combo Box. And as a reader if this report, we get a nice overview of which tests pass / fail / are suspended.
+The hierarchy of the describe statements will start to make sense the more unit tests we add as they will simply be more checkboxes underneath e.g. Combo Box. And as a reader if this report, we get a nice overview of which tests pass / fail / are suspended. The it-statements should be written in such a way that it makes sense even for a non-technical person to read them and anticipate what the test is trying to achieve.
 
-The source code for this can be found at this repository, and it's all setup for you to get the tests running.
-
-```JavaScript
-git clone https://github.com/MTjody/unit-tests.git
-cd unit-tests
-npm i
-npm t
-```
+The source code for these tests can be found at [this repository](https://github.com/MTjody/unit-tests). Stay tuned for the next one!
