@@ -27,14 +27,13 @@ export default function Feedback() {
     self.FIREBASE_APPCHECK_DEBUG_TOKEN =
       process.env.NEXT_PUBLIC_FIREBASE_APPCHECK_DEBUG_TOKEN;
 
-    const appCheck = initializeAppCheck(app, {
+    initializeAppCheck(app, {
       provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_KEY),
 
       // Optional argument. If true, the SDK automatically refreshes App Check
       // tokens as needed.
       isTokenAutoRefreshEnabled: true,
     });
-    console.log(appCheck);
 
     const db = getDatabase();
     setDb(db);
