@@ -78,7 +78,7 @@ export default function Feedback() {
       </Head>
       <article>
         {submitted ? (
-          <div>Thank you for your feedback!</div>
+          <h1>Thank you for your feedback!</h1>
         ) : (
           <header>
             <h1>Give me some feedback, please!</h1>
