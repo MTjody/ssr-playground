@@ -60,18 +60,17 @@ export default function Home({ allPosts }) {
       </Head>
       <section className={utilStyles.headingSm}>
         <blockquote className={utilStyles.presentation}>
-          Hi! 👋 I'm a software developer in Sweden writing about whatever comes
-          to mind. Give my blog a read will you?
+          Software development lessons learned the hard way, so that you don't
+          have to!
         </blockquote>
       </section>
       <section className={utilStyles.padding1px}>
         <h2 className={utilStyles.headingLg}>Blog Posts</h2>
 
         <ul className={`${styles.blogPosts} ${utilStyles.list}`}>
-          {filtered.length === 0 ? 
-            allPosts.map(postMapper) : 
-            filtered.map(postMapper)
-          }
+          {filtered.length === 0
+            ? allPosts.map(postMapper)
+            : filtered.map(postMapper)}
         </ul>
       </section>
     </Layout>
