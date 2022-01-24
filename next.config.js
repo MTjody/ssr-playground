@@ -29,12 +29,14 @@ const nextConfig = {
                 "https://www.google.com",
                 "https://www.gstatic.com",
                 "https://*.firebasedatabase.app/",
+                "https://utteranc.es/client.js",
                 // TODO generate hash for scripts or use https://www.npmjs.com/package/next-strict-csp
               ],
               frameSrc: [
                 "'self'",
                 "https://www.google.com",
                 "wss://*.firebasedatabase.app",
+                "https://utteranc.es",
               ],
               connectSrc: [
                 "'self'",
