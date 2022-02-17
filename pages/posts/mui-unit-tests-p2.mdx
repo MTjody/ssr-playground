@@ -1,10 +1,14 @@
----
-title: "Material UI unit tests - hands on"
-date: "2022-02-08"
-description: "No more fluff, let's write unit tests for the front-end using MUI, React and Testing Library"
-tldr: "Scenarios -> Setup -> Interact -> Verify"
-topics: "Testing, Jest, React"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Material UI unit tests - hands on",
+  date: "2022-02-08",
+  description: "No more fluff, let's write unit tests for the front-end using MUI, React and Testing Library",
+  tldr: "Scenarios -> Setup -> Interact -> Verify",
+  topics: "Testing, Jest, React"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 
 This is the second of two hands-on posts about unit testing the front-end. This time we'll build on the principles from the [previous post](/posts/mui-unit-tests-p1) and write clean UI tests that make sense.
 
@@ -16,7 +20,7 @@ But the component is a lot more advanced than that. A good way to find out the c
 
 Also if we notice that each test starts the exact same way, maybe we should try to extract the code to avoid duplication as much as possible. Notice that the argument to render are the same six lines of code, so why not extract them into a const in the parent scope, turning this:
 
-```JavaScript
+```js
 describe("Combo box", () => {
   it("should render an input field", () => {
     const { container, getByLabelText, debug } = render(
@@ -46,7 +50,7 @@ describe("Combo box", () => {
 Into this:
 
 
-```JavaScript
+```js
 describe("Combo box", () => {
   const comboBox = (
     <Autocomplete
@@ -69,7 +73,7 @@ describe("Combo box", () => {
 
 If we have tests that need some setup to run _before each_ unit test, or _before all_ unit tests, we use the `beforeEach` or `beforeAll` method, and in the callback argument we specify what needs to be done. If we need to do clean-up there is the corresponding `afterEach` and `afterAll` methods.
 
-```JavaScript
+```js
 describe("Combo box", () => {
   beforeEach(() => {
     console.log("This will run before each and every test (it-statement) in the scope");
@@ -96,7 +100,7 @@ Back to writing actual unit tests, what more scenarios can we think of? In this 
 
 Straightforward enough, now let's try to write the tests. You can use debug statements to get a feel for what is rendered on the DOM and how to get a hold of (parts of) the elements you're testing.
 
-```Javascript
+```js
 it("should show the list of movies on focus", () => {
   const { getByLabelText, container } = render(comboBox);
   userEvent.click(getByLabelText("Movie"));
@@ -111,7 +115,7 @@ For this first test, we use the [getAllByRole](https://testing-library.com/docs/
 Let's continue with the other test cases.
 
 
-```Javascript
+```js
 it("should filter the list of movies according to the input", () => {
   const { getByLabelText, container } = render(comboBox);
   // We skip the click/focus assertion since we already checked it
@@ -154,7 +158,7 @@ The AutoComplete component has another variant as well: the [Multiple Values](ht
 Easily translatable to it-statements, we get these tests:
 
 
-```JavaScript
+```js
 describe("Multiple Values", () => {
   const multipleValues = (
     <Autocomplete
@@ -200,7 +204,7 @@ We've been using a utility called [userEvent](https://testing-library.com/docs/e
 
 Note the different usage between e.g. `.click()`, `.type()`, and `.keyboard()`. The `keyboard` function let's us fire one-off keyboard events, whereas `type` accepts whole strings.
 
-```Javascript
+```js
 function hasTagIndex(chip: HTMLElement) { 
   return chip.getAttribute("data-tag-index") !== null;
 };

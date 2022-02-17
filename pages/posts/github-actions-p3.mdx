@@ -1,10 +1,16 @@
----
-title: "Github Actions - Reviewing Deployments"
-date: "2021-08-31"
-description: "Add reviewers for your critical Github Actions Deployments"
-tldr: "Refer to protected environments in your workflow to add deployment guards"
-topics: "Github Actions, CI/CD"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Github Actions - Reviewing Deployments",
+  date: "2021-08-31",
+  description: "Add reviewers for your critical Github Actions Deployments",
+  tldr: "Refer to protected environments in your workflow to add deployment guards",
+  topics: "Github Actions, CI/CD"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
+
+
 
 ## Previous post
 
@@ -92,7 +98,7 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.project-name-deployment.outputs.deployment_id }}
           env_url: https://example.org/your/environment/url
-          desc: Description for the deployment
+          desc: description for the deployment
 ```
 
 **PRO TIP 2:** we can name our deployments dynamically if we want temporary environments. This is necessary if you build and deploy on a per-branch basis, otherwise you'll end up with a shared Github Environment for multiple PRs, which leads to an inconsistent UI in Github. When the PR is merged and the branch is deleted you just need to run the [deactivate](https://github.com/bobheadxi/deployments#step-deactivate-env) step. This is best done in a separate Github Actions Workflow which is triggered on [PR closed](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#pull_request) events.
@@ -129,7 +135,7 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.project-name-deployment.outputs.deployment_id }}
           env_url: https://example.org/your/environment/${{env.BRANCH_NAME}}/url
-          desc: Description for the deployment
+          desc: description for the deployment
 ```
 
 **Note!** You should probably delete your branch dev environment on your hosting provider as well, since the deactivation below only concerns the Github Deployment. Nobody likes pollution in the cloud 🤓

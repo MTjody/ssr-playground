@@ -1,10 +1,15 @@
----
-title: "Navigating an assignment"
-date: "2020-12-01"
-description: "Brief guide to starting an assignment and coming out on top, based on observations and own experiences."
-tldr: "Identify stakeholders and requirements; ask questions!"
-topics: "Project management, Interpersonal skills"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Navigating an assignment",
+  date: "2020-12-01",
+  description: "Brief guide to starting an assignment and coming out on top, based on observations and own experiences.",
+  tldr: "Identify stakeholders and requirements; ask questions!",
+  topics: "Project management, Interpersonal skills"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
+
 
 Taking on a new assignment can be a daunting task. There is the social aspect of it, the technical, and the unknown - spooky! Hopefully this post will help prepare for the next time you start anew. Some points are from personal experience, some from discussions with colleagues, and some where I've observed more experienced colleagues.
 
@@ -34,7 +39,7 @@ If you feel uncomfortable doing this, or you feel like it's not your job, maybe 
 
 ### Abstractions to scenarios
 
-In order to keep the ball rolling, you need to **break down** the abstractions and fancy project description **into real scenarios**. This can help in identifying the needs which you're about to cater to.
+In order to keep the ball rolling, you need to **break down** the abstractions and fancy project "description": **into real scenarios**. This can help in identifying the needs which you're about to cater to.
 
 ![Abstractions to scenarios](/images/new-project-abstract-to-scenario.svg)
 

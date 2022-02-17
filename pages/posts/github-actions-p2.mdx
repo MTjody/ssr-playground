@@ -1,10 +1,15 @@
----
-title: "Github Actions - Parallelised builds with caching"
-date: "2021-06-28"
-description: "Leveraging parallelisation and caching for faster Github Actions Workflows"
-tldr: "Define several jobs in a workflow, and use the cache action"
-topics: "Github Actions, CI/CD"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Github Actions - Parallelised builds with caching",
+  date: "2021-06-28",
+  description: "Leveraging parallelisation and caching for faster Github Actions Workflows",
+  tldr: "Define several jobs in a workflow, and use the cache action",
+  topics: "Github Actions, CI/CD"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
+
 
 ## Previous post
 

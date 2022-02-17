@@ -1,10 +1,14 @@
----
-title: "Class Accessors in TS break tree-shaking!"
-date: "2021-03-15"
-description: "TypeScript compiles your code to JS, but do you know what that code looks like, and what implications it might have?"
-tldr: "Accessor properties in TS result in Object.defineProperty, which bundlers deem too side-effectful to tree-shake."
-topics: "Tree-shaking, TypeScript, Yak-shaving"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Class Accessors in TS break tree-shaking!",
+  date: "2021-03-15",
+  description: "TypeScript compiles your code to JS, but do you know what that code looks like, and what implications it might have?",
+  tldr: "Accessor properties in TS result in Object.defineProperty, which bundlers deem too side-effectful to tree-shake.",
+  topics: "Tree-shaking, TypeScript, Yak-shaving"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 
 ## Terminology and context
 
@@ -19,7 +23,7 @@ In my assignment, we were creating a web application where a small bundle size w
 
 I noticed something right away, the webpack config looked like this:
 
-```JavaScript
+```js
 // webpack.config.js
 
 module.exports = {
@@ -61,7 +65,7 @@ So, still without results, I thought that if I make the library output an ES Mod
 
 So I upgraded TS to the latest version and voilá, no errors. Nice! I was so close I could taste it. The promise of optimized code and small bundles kept my fire burning. Alas, the build failed due to the library importing certain files as strings using the webpack raw-loader.
 
-```JavaScript
+```js
 // webpack.config.js
 
 module.exports = {
@@ -87,7 +91,7 @@ Agadoo didn't tell me why, it just said it couldn't be done. But using Agadoo, I
 
 > Using TypeScript [Class accessors](https://www.typescriptlang.org/docs/handbook/2/classes.html#getters--setters) will result in `Object.defineProperty` for the transpiled code.
 
-```JavaScript
+```js
 class Example {
   get prop() { return true; }
 }

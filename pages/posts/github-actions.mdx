@@ -1,10 +1,15 @@
----
-title: "Github Actions - Developing Workflows before merge"
-date: "2021-05-20"
-description: "How to test your GH Actions Workflows before merging to your main branch."
-tldr: "Commit a dummy workflow to main, develop and trigger manually from another branch"
-topics: "Github Actions, CI/CD, Quick-Tips"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Github Actions - Developing Workflows before merge",
+  date: "2021-05-20",
+  description: "How to test your GH Actions Workflows before merging to your main branch.",
+  tldr: "Commit a dummy workflow to main, develop and trigger manually from another branch",
+  topics: "Github Actions, CI/CD, Quick-Tips"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
+
 
 ## Background
 

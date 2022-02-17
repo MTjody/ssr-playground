@@ -1,34 +1,38 @@
 import Head from "next/head";
 import Link from "next/link";
-
-import Layout, { siteTitle } from "../components/layout";
-import styles from "./index.module.css";
-import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
-import Date from "../components/date";
-import Topics from "../components/topics";
 import { useState } from "react";
+import Date from "../components/date";
+import Layout, { siteTitle } from "../components/layout";
+import Topics from "../components/topics";
+import utilStyles from "../styles/utils.module.css";
+import styles from "./index.module.css";
+import { metadata as m1 } from "./posts/art-of-over-engineering.mdx";
+import { metadata as m2 } from "./posts/automated-testing-nestjs.mdx";
+import { metadata as m3 } from "./posts/commandments-of-leadership.mdx";
+// import { metadata as m4 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m5 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m6 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m7 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m8 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m9 } from "./posts/art-of-over-engineering.mdx";
+// import { metadata as m10 } from "./posts/art-of-over-engineering.mdx";
 
-export default function Home({ allPosts }) {
+const allPosts = [m1, m2, m3];
+
+export default function Home({ posts }) {
   const [filtered, setFiltered] = useState([]);
-
   function filterCallback(arg) {
     if (arg) {
-      setFiltered(
-        allPosts.filter(post => post.topics.includes(arg))
-      );
+      setFiltered(posts.filter((post) => post.topics.includes(arg)));
     } else {
-      setFiltered([])
+      setFiltered([]);
     }
   }
 
-
   function postMapper({ id, date, title, description, topics }) {
+    console.log("postmapper", id, date, title, description, topics);
     return (
-      <li
-        key={id}
-        className={`${styles.blogPost} ${utilStyles.listItem}`}
-      >
+      <li key={id} className={`${styles.blogPost} ${utilStyles.listItem}`}>
         <Link href="/posts/[id]" as={`/posts/${id}`}>
           <a className={styles.title}>{title}</a>
         </Link>
@@ -69,7 +73,7 @@ export default function Home({ allPosts }) {
 
         <ul className={`${styles.blogPosts} ${utilStyles.list}`}>
           {filtered.length === 0
-            ? allPosts.map(postMapper)
+            ? posts.map(postMapper)
             : filtered.map(postMapper)}
         </ul>
       </section>
@@ -82,11 +86,10 @@ export default function Home({ allPosts }) {
   It won’t even be included in the JS bundle for the browser.
   Runs at build time in prod!
  */
-export async function getStaticProps() {
-  const allPosts = getSortedPostsData();
-  return {
-    props: {
-      allPosts,
-    },
-  };
+export function getStaticProps() {
+  const posts = allPosts.sort(
+    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+  );
+
+  return { props: { posts } };
 }

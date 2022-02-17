@@ -1,10 +1,14 @@
----
-title: "Reactive Template Literals Mistake"
-date: "2021-09-17"
-description: "When trying to setup a reactive template literal in a React component went wrong"
-tldr: "Yeah I'm not spoiling this one"
-topics: "React, Javascript, Front-end"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Reactive Template Literals Mistake",
+  date: "2021-09-17",
+  description: "When trying to setup a reactive template literal in a React component went wrong",
+  tldr: "Yeah I'm not spoiling this one",
+  topics: "React, Javascript, Front-end"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 
 ## Background
 
@@ -13,7 +17,7 @@ At my current employer, we developers conduct technical interviews. The goals of
 
 During a recent interview process, I reviewed code and tested the client only to notice a subtle bug. Stripping the component to it's basics, it looked something like this:
 
-```JavaScript
+```js
 import { useState } from "react";
 
 export default function App() {
@@ -55,7 +59,7 @@ We can use the [`useState` hook](https://reactjs.org/docs/hooks-state.html) to s
 
 Given that the `<Greeter />`-component was a third party component and we were not able to change it's API, we could wrap it in a `<div>` with a click listener which updates the greeting string. If we had control over the `<Greeter />`-component, an alternative solution would be to expose the `onClick`-method as a property of the `<Greeter />`-component. This way a parent wouldn't have to wrap the component in another HTML element on order to register a click listener.
 
-```JavaScript
+```js
 export default function App() {
   const words = ["World", "There", "You", "My homies", "Beautiful"];
   const [greeting, setGreeting] = useState(words[0]);

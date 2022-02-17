@@ -1,10 +1,14 @@
----
-title: "Oops - what went wrong?"
-date: "2021-01-15"
-description: "Give yourself a head-start in the battle against errors, and what to do when things go south!"
-tldr: "Break down your issue, find the root cause."
-topics: "Tooling, Debugging, Git"
----
+import Post from "../../lib/postLayout"
+
+export const metadata = {
+  title: "Oops - what went wrong?",
+  date: "2021-01-15",
+  description: "Give yourself a head-start in the battle against errors, and what to do when things go south!",
+  tldr: "Break down your issue, find the root cause.",
+  topics: "Tooling, Debugging, Git"
+}
+
+export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 
 ## Ground work
 
