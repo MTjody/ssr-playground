@@ -1,12 +1,12 @@
 import Post from "../../lib/postLayout"
 
----
-title: "Eight commandments of great leadership"
-date: "2021-04-06"
-description: "Introspection of what I'd like to see from a leader, and what I strive to accomplish as a leader."
-tldr: "Lead by example, be passionate and understanding, set goals and trust your colleagues!"
-topics: "Leadership, Interpersonal skills"
----
+export const metadata = {
+  title: "Eight commandments of great leadership",
+  date: "2021-04-06",
+  description: "Introspection of what I'd like to see from a leader, and what I strive to accomplish as a leader.",
+  tldr: "Lead by example, be passionate and understanding, set goals and trust your colleagues!",
+  topics: "Leadership, Interpersonal skills"
+}
 
 export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 

@@ -180,7 +180,7 @@ describe("Multiple Values", () => {
 
 The test above will fail! Why? Because the chip is one button, but there is also a clear button in the component. This is visible if you add the debug statement before the expect statement fails. You'll get a printout of the DOM that looks something like this:
 
-```HTML
+```html
 <!-- first match -->
 <div
   class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-deletable MuiChip-deletableColorDefault MuiChip-filledDefault MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1k430x0-MuiButtonBase-root-MuiChip-root"
@@ -230,7 +230,7 @@ it("should add a chip once a value from the list has been selected", () => {
 The implementation of remaining test cases cover nothing new and have been omitted from this post. They're available in the repo linked at the bottom of this post. If we run the test suite now using the terminal, we get the following output. Note the structure of the report, and how any english-speaking person can make sense of it.
 
 
-```terminal
+```sh
 ➜  unit-tests git:(main) ✗ npm t
 
 > unit-tests@1.0.0 test

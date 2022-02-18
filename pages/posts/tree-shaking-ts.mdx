@@ -40,7 +40,7 @@ The library target was set to UMD, which is not tree-shakeable since a bundler c
 
 "Big deal, just change it to "module" and you're good!". Well yes, but actually no:
 
-```JSON
+```json
 // package.json
 {
   devDependencies: {
@@ -53,7 +53,7 @@ Looking at the documentation we can see that only [Webpack 5](https://webpack.js
 
 So, still without results, I thought that if I make the library output an ES Module alongside the UMD, no harm will be done, and as I didn't want to be responsible for breaking stuff I opted to try using Rollup. The promise of an easy setup and excellent track-record and documentation was appealing. So adding Rollup and the config needed, I encountered an error in TypeScript compatibility with rollup.
 
-```JSON
+```json
 // package.json
 {
   devDependencies: {

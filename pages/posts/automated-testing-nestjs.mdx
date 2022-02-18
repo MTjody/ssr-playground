@@ -1,12 +1,12 @@
 import Post from "../../lib/postLayout"
 
----
-title: "Automated Testing with NestJS"
-date: "2020-06-26"
-description: "Hands-on look into structuring your tests and mocking dependencies."
-tldr: "Use abstraction layers in your code, mock your dependencies."
-topics: "Testing, NestJS, Jest"
----
+export const metadata = {
+  title: "Automated Testing with NestJS",
+  date: "2020-06-26",
+  description: "Hands-on look into structuring your tests and mocking dependencies.",
+  tldr: "Use abstraction layers in your code, mock your dependencies.",
+  topics: "Testing, NestJS, Jest"
+}
 
 export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 

@@ -1,12 +1,13 @@
 import Post from "../../lib/postLayout";
 
----
-title: "The art of over-engineering"
-date: "2021-02-21"
-description: "A story about needlessly complicating things and missing the most obvious solution."
-tldr: "Try the easiest things you can think of before looking to complicated solutions"
-topics: "Problem solving, FaaS, Terraform, GCP"
----
+export const metadata = {
+  title: "The art of over-engineering",
+  date: "2021-02-21",
+  description:
+    "A story about needlessly complicating things and missing the most obvious solution.",
+  tldr: "Try the easiest things you can think of before looking to complicated solutions",
+  topics: "Problem solving, FaaS, Terraform, GCP",
+};
 
 export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 
@@ -53,7 +54,7 @@ getActivity();
 
 Now for the markup. Notice how Svelte allows you to declare what is rendered in squiggly-brace blocks. We declare the loading state, await the value of the promise and handle errors all in a related block of code.
 
-```HTML
+```svelte
 <main>
   <h1>Bored today?</h1>
   <p>Fear not! I have a suggestion!</p>
@@ -89,7 +90,7 @@ So this got me thinking. My initial thought was that one way of solving these ty
 
 In the [Terraform configuration](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function), notice the resources needed to get going. The bucket will contain the zip file, which contains the function itself. Next, some details about the function itself, and the IAM bindings needed for permissions to invoke the function. Note the value of the ? `name`-property of the archive resource. It is a solution for re-deploying the function on changes. By hashing the contents and adding the hash to the name, Terraform understands that the archive has changed and needs an update.
 
-```bash
+```hcl
 resource "google_storage_bucket" "bucket" {
   name = var.bucket_name
 }
