@@ -1,12 +1,12 @@
-import Post from "../../lib/postLayout"
+import Post from "../../lib/postLayout";
 
-export const metadata = {
-  title: "The art of over-engineering",
-  date: "2021-02-21",
-  description: "A story about needlessly complicating things and missing the most obvious solution.",
-  tldr: "Try the easiest things you can think of before looking to complicated solutions",
-  topics: "Problem solving, FaaS, Terraform, GCP"
-}
+---
+title: "The art of over-engineering"
+date: "2021-02-21"
+description: "A story about needlessly complicating things and missing the most obvious solution."
+tldr: "Try the easiest things you can think of before looking to complicated solutions"
+topics: "Problem solving, FaaS, Terraform, GCP"
+---
 
 export default ({ children }) => <Post metadata={metadata}>{children}</Post>
 

@@ -1,23 +1,18 @@
+// @ts-check
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
-import Date from "../components/date";
-import Layout, { siteTitle } from "../components/layout";
-import Topics from "../components/topics";
-import utilStyles from "../styles/utils.module.css";
-import styles from "./index.module.css";
-import { metadata as m1 } from "./posts/art-of-over-engineering.mdx";
-import { metadata as m2 } from "./posts/automated-testing-nestjs.mdx";
-import { metadata as m3 } from "./posts/commandments-of-leadership.mdx";
-// import { metadata as m4 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m5 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m6 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m7 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m8 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m9 } from "./posts/art-of-over-engineering.mdx";
-// import { metadata as m10 } from "./posts/art-of-over-engineering.mdx";
 
-const allPosts = [m1, m2, m3];
+import fs from "fs";
+import path from "path";
+// import matter from "gray-matter";
+
+import Layout, { siteTitle } from "../components/layout";
+import styles from "./index.module.css";
+import utilStyles from "../styles/utils.module.css";
+// import { getSortedPostsData } from "../lib/posts";
+import Date from "../components/date";
+import Topics from "../components/topics";
+import { useState } from "react";
 
 export default function Home({ posts }) {
   const [filtered, setFiltered] = useState([]);
@@ -86,10 +81,69 @@ export default function Home({ posts }) {
   It won’t even be included in the JS bundle for the browser.
   Runs at build time in prod!
  */
-export function getStaticProps() {
-  const posts = allPosts.sort(
-    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
-  );
+export const getStaticProps = async () => {
+  // fetch posts
+  const postDirectory = path.join(process.cwd(), "pages");
 
-  return { props: { posts } };
-}
+  const postFilenames = fs.readdirSync(postDirectory);
+  console.log("post filenames", postFilenames);
+  // postFilenames.map((p) => console.log(`pages/posts/${p}`));
+  const postModules = await Promise.all(
+    postFilenames
+      .filter((n) => n.endsWith(".mdx"))
+      .map(async (p) => {
+        const filepath = `./${p}`;
+        console.log("filepath", filepath);
+        return import(filepath);
+      })
+  );
+  console.log(postModules);
+  // const postMetadata = postModules.map((m) => m.metadata);
+  // return props
+  return {
+    props: {
+      // posts: postMetadata,
+      posts: [],
+    },
+  };
+};
+// export function getStaticProps() {
+//   const postsDirectory = path.join(process.cwd(), "pages", "posts");
+
+//   const fileNames = fs.readdirSync(postsDirectory);
+
+//   console.log("filenames", fileNames);
+//   const allPostsData = fileNames.map(async (fileName) => {
+//     // console.log("filename", fileName);
+//     // Remove ".md" from file name to get id
+//     const id = fileName.replace(/\.mdx$/, "");
+//     // console.log("id", id);
+
+//     // const mod = await import(`./${fileName}`);
+//     const mod = require(`./${fileName}`);
+//     console.log("import mod", `./${fileName}`, mod);
+//     // console.log(mod.metadata);
+//     // const postModules = await Promise.all(
+//     //   fileNames.map(async (p) => import(`./${p}`))
+//     // );
+//     // console.log("postmodules", postModules);
+
+//     // const postMetadata = postModules.map((m) =>
+//     //   m.metadata ? m.metadata : null
+//     // );
+
+//     // console.log("dynamic import of: ", postMetadata);
+
+//     // Combine the data with the id
+//     return {
+//       id,
+//       // ...matterResult.data,
+//     };
+//   });
+
+//   // const posts = allPostsData.sort(
+//   //   (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+//   // );
+
+//   return { props: { posts: [] } };
+// }
