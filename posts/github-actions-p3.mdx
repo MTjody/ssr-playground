@@ -20,7 +20,7 @@ Next up we would probably need to add environment variables. These differ greatl
 
 _The workflow below has a lot of steps omitted, please refer to the older posts for an in depth look at what they might look like._
 
-```yml
+```yaml
 # .github/workflows/deploy.yml
 on:
   workflow_dispatch:
@@ -59,7 +59,7 @@ We just need to reference this bad boy from our workflow and then we're done. Se
 
 **PRO TIP 1:** let's use the [Github deployments action](https://github.com/bobheadxi/deployments#github-deployments-) to get a nice activity log when navigating to the environment in Github. If used in a build workflow you'll also get informative entries in the Pull Request overview with links to the deployment. It's very simple to use, you just place the _start_ step before your deployment, and the _finish_ step afterwards. The `env` property needs to match the environment name.
 
-```yml
+```yaml
 # .github/workflows/deploy.yml
 
 # omitted
@@ -97,7 +97,7 @@ jobs:
 
 **PRO TIP 2:** we can name our deployments dynamically if we want temporary environments. This is necessary if you build and deploy on a per-branch basis, otherwise you'll end up with a shared Github Environment for multiple PRs, which leads to an inconsistent UI in Github. When the PR is merged and the branch is deleted you just need to run the [deactivate](https://github.com/bobheadxi/deployments#step-deactivate-env) step. This is best done in a separate Github Actions Workflow which is triggered on [PR closed](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#pull_request) events.
 
-```yml
+```yaml
 # .github/workflows/build.yml
 
 # omitted
@@ -135,7 +135,7 @@ jobs:
 **Note!** You should probably delete your branch dev environment on your hosting provider as well, since the deactivation below only concerns the Github Deployment. Nobody likes pollution in the cloud 🤓
 
 
-```yml
+```yaml
 # .github/workflows/deactivate-env.yml
 
 # omitted

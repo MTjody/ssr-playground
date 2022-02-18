@@ -1,8 +1,8 @@
+//@ts-check
 import { useState } from "react";
 import Topic from "./topic";
 
 export default function Topics({ topics, filter }) {
-
   const [selected, setSelected] = useState("");
 
   function handleClick(topic) {

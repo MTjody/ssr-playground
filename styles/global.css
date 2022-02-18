@@ -1,5 +1,3 @@
-@import "../node_modules/rehype-highlight/node_modules/highlight.js/styles/atom-one-dark.css";
-
 :root {
   --color-theme: #fcdab7;
   --color-text: #ececec;

@@ -16,7 +16,7 @@ Lo and behold, an API for when you're bored is in that list. I [look at the docu
 
 So I set Svelte up and boom, a web app is up and running. I add some code for the API call and present it in the UI, some bells and whistles and it's done. It's all in one component, but I'll chop it up for you for formatting reasons. Notice that the API call is wrapped in a promise, this was done to give the text animation proper time, and reduce jumpiness for the end-user. The API result will show in one second (or longer if the API misbehaves).
 
-```JavaScript
+```js
 async function getActivity() {
   // Wrap the ajax call in a promise to enforce one second loading
   const prom = new Promise(async (resolve, reject) => {
@@ -49,7 +49,7 @@ getActivity();
 
 Now for the markup. Notice how Svelte allows you to declare what is rendered in squiggly-brace blocks. We declare the loading state, await the value of the promise and handle errors all in a related block of code.
 
-```HTML
+```html
 <main>
   <h1>Bored today?</h1>
   <p>Fear not! I have a suggestion!</p>
@@ -141,7 +141,7 @@ resource "google_cloudfunctions_function_iam_binding" "binding" {
 
 The function itself was pretty simple, all it had to do was call the API for me and return the result. When implementing this, I made sure not to depend on any packages so that the function would be as simple as possible to avoid depending on other than built-in packages, and also help to reduce startup latency.
 
-```JavaScript
+```js
 const http = require("http");
 
 exports.boredProxy = (req, res) => {

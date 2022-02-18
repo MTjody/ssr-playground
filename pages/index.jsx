@@ -1,41 +1,38 @@
+//@ts-check
 import Head from "next/head";
 import Link from "next/link";
 
 import Layout, { siteTitle } from "../components/layout";
 import styles from "./index.module.css";
 import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
-import Date from "../components/date";
+//import { getSortedPostsData } from "../lib/posts";
+import DateComponent from "../components/date";
 import Topics from "../components/topics";
 import { useState } from "react";
+import { allPosts } from ".contentlayer/generated";
 
-export default function Home({ allPosts }) {
+export default function Home({ posts }) {
   const [filtered, setFiltered] = useState([]);
 
   function filterCallback(arg) {
     if (arg) {
-      setFiltered(
-        allPosts.filter(post => post.topics.includes(arg))
-      );
+      setFiltered(posts.filter((post) => post.topics.includes(arg)));
     } else {
-      setFiltered([])
+      setFiltered([]);
     }
   }
 
-
-  function postMapper({ id, date, title, description, topics }) {
+  function postMapper({ slug, date, title, description, topics }) {
+    //console.log("id", slug, date, title, description, topics);
     return (
-      <li
-        key={id}
-        className={`${styles.blogPost} ${utilStyles.listItem}`}
-      >
-        <Link href="/posts/[id]" as={`/posts/${id}`}>
+      <li key={slug} className={`${styles.blogPost} ${utilStyles.listItem}`}>
+        <Link href="/posts/[id]" as={`/posts/${slug}`}>
           <a className={styles.title}>{title}</a>
         </Link>
 
         <small className={styles.description}>{description}</small>
         <small className={styles.date}>
-          <Date dateString={date} />
+          <DateComponent dateString={date} />
         </small>
         <div className={styles.topics}>
           <Topics topics={topics} filter={filterCallback} />
@@ -69,7 +66,7 @@ export default function Home({ allPosts }) {
 
         <ul className={`${styles.blogPosts} ${utilStyles.list}`}>
           {filtered.length === 0
-            ? allPosts.map(postMapper)
+            ? posts.map(postMapper)
             : filtered.map(postMapper)}
         </ul>
       </section>
@@ -81,12 +78,10 @@ export default function Home({ allPosts }) {
   Runs only on the server-side. It will never be run on the client-side. 
   It won’t even be included in the JS bundle for the browser.
   Runs at build time in prod!
- */
+  */
 export async function getStaticProps() {
-  const allPosts = getSortedPostsData();
-  return {
-    props: {
-      allPosts,
-    },
-  };
+  const posts = allPosts.sort(
+    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
+  );
+  return { props: { posts } };
 }

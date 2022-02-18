@@ -42,7 +42,7 @@ Some configuration did not activate for some reason, no amount of debugging or g
 
 The most common "solution" out there is to make sure to use the page argument for your tests:
 
-```Javascript
+```js
 test("some user flow", async ({ page }) => { /* omitted */ });
 ```
 
@@ -89,7 +89,7 @@ We use page [locators](https://playwright.dev/docs/api/class-locator) to try and
 
 Note the importance of accessing the element type and what it should contain, rather than using test-ids. The aim is for the test to be as similar as possible as a human clicking around. A human does not have access to test-ids. *But MTJody, I don’t have time to write these specific selectors!* Well Playwright has got you covered! There is a tool called Playwright inspector which has built in code generation. You simply start your test in headed mode with an added pause block like the below...
 
-```Javascript
+```js
 test("some user flow", async ({ page }) => {
   // Will pause the test execution. Don't commit these types of lines!
   await page.pause();
@@ -108,7 +108,7 @@ Sometimes these locators don’t work, and you might get frustrated. Congrats, n
 So far we have seen `page.locator` but there are a lot of other helpful commands as well. You can use nested locators:
 
 
-```Javascript
+```js
 const selectElem = this.page.locator('div[role="button"]:has-text("Select A Value")');
 const someItem = selectElem.locator('text=A Value');
 const anotherItem = selectElem.locator('text=Another Value');
@@ -117,7 +117,7 @@ const anotherItem = selectElem.locator('text=Another Value');
 Find out what is displayed or hidden:
 
 
-```Javascript
+```js
 // You can give each individual function a timeout if needed, the value is number of ms.
 await expect(someItem).toBeVisible({ timeout: 15000 });
 await expect(anotherItem).toBeHidden();
@@ -125,7 +125,7 @@ await expect(anotherItem).toBeHidden();
 
 Finally interacting with elements:
 
-```Javascript
+```js
 // Simulate a click
 await someItem.click();
 // Check a checkbox input, will immediately assert that the checkbox state was toggled
