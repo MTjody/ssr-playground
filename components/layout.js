@@ -1,3 +1,4 @@
+//@ts-check
 import Link from "next/link";
 import React from "react";
 import utilStyles from "../styles/utils.module.css";

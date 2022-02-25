@@ -1,14 +1,27 @@
+//@ts-check
+import React from "react";
+import { useMDXComponent } from "next-contentlayer/hooks";
+import { allPosts } from ".contentlayer/generated";
+
 import Head from "next/head";
 import { useRef, useEffect } from "react";
 import Layout from "../../components/layout";
-import { getAllPostIds, getPostData } from "../../lib/posts";
 import Date from "../../components/date";
-import ReadTime from "../../components/readtime";
 import utilStyles from "../../styles/utils.module.css";
 import styles from "./posts.module.css";
 import insertCommentSection from "../../lib/comments";
 
-export default function Post({ postData }) {
+export default function Post({ post }) {
+  const Component = useMDXComponent(post.body.code);
+
+  return (
+    <PostLayout {...post}>
+      <Component />
+    </PostLayout>
+  );
+}
+
+function PostLayout({ children, title, description, date, readingTime, tldr }) {
   const sectionElem = useRef();
 
   useEffect(() => {
@@ -18,27 +31,26 @@ export default function Post({ postData }) {
   return (
     <Layout>
       <Head>
-        <title>{postData.title}</title>
-        <meta property="og:description" content={postData.description} />
+        <title>{title}</title>
+        <meta property="og:description" content={description} />
         <meta
           property="og:image"
           content={`https://og-image.now.sh/${encodeURI(
-            postData.title
+            title
           )}.png?theme=dark&md=1&fontSize=100px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fhyper-bw-logo.svg&images=https%3A%2F%2Fmtjody.now.sh%2F8bitprofile.svg&widths=250&widths=250&heights=250&heights=250`}
         />
-        <meta property="og:title" content={postData.title} />
+        <meta property="og:title" content={title} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <article>
         <header className={styles.articleHeader}>
-          <h1 className={`${utilStyles.headingXl} ${styles.title}`}>
-            {postData.title}
-          </h1>
-          <Date dateString={postData.date} />
-          <ReadTime rawText={postData.content} />
+          <h1 className={`${utilStyles.headingXl} ${styles.title}`}>{title}</h1>
+          <Date dateString={date} />
+          <div>{readingTime.text}</div>
         </header>
-        <blockquote className={styles.tldr}>TL;DR - {postData.tldr}</blockquote>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        <blockquote className={styles.tldr}>TL;DR - {tldr}</blockquote>
+        {/* Post content */}
+        {children}
       </article>
       <section ref={sectionElem}></section>
     </Layout>
@@ -46,18 +58,13 @@ export default function Post({ postData }) {
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPostIds();
   return {
-    paths,
+    paths: allPosts.map((blog) => ({ params: { slug: blog.slug } })),
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id);
-  return {
-    props: {
-      postData,
-    },
-  };
+  const post = allPosts.find((blog) => blog.slug === params.slug);
+  return { props: { post } };
 }

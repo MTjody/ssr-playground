@@ -14,9 +14,9 @@ Lo and behold, an API for when you're bored is in that list. I [look at the docu
 
 ## Getting started
 
-So I set Svelte up and boom, a web app is up and running. I add some code for the API call and present it in the UI, some bells and whistles and it's done. It's all in one component, but I'll chop it up for you for formatting reasons. Notice that the API call is wrapped in a promise, this was done to give the text animation proper time, and reduce jumpiness for the end-user. The API result will show in one second (or longer if the API misbehaves).
+So I set Svelte up and boom, a web app is up and running. I add some code for the API call and present it in the UI, some bells and whistles and it's done. Notice that the API call is wrapped in a promise, this was done to give the text animation proper time, and reduce jumpiness for the end-user. The API result will show in one second (or longer if the API misbehaves).
 
-```JavaScript
+```svelte app.svelte
 async function getActivity() {
   // Wrap the ajax call in a promise to enforce one second loading
   const prom = new Promise(async (resolve, reject) => {
@@ -45,11 +45,7 @@ async function getActivity() {
 }
 
 getActivity();
-```
 
-Now for the markup. Notice how Svelte allows you to declare what is rendered in squiggly-brace blocks. We declare the loading state, await the value of the promise and handle errors all in a related block of code.
-
-```HTML
 <main>
   <h1>Bored today?</h1>
   <p>Fear not! I have a suggestion!</p>
@@ -71,6 +67,9 @@ Now for the markup. Notice how Svelte allows you to declare what is rendered in 
 </style>
 ```
 
+Now for the markup. Notice how Svelte allows you to declare what is rendered in squiggly-brace blocks. We declare the loading state, await the value of the promise and handle errors all in a related block of code.
+
+
 ## Release issues
 
 Nice, now all I need is a server to host the static files for the wep application. [Github Pages](https://pages.github.com/) is a nice zero-effort candidate for that. Using [push-dir](https://www.npmjs.com/package/push-dir) I setup a deploy script which takes the files in the public folder and pushes it to a `gh-pages`-branch which Gihub Actons uses as a default branch from which the static web app is served. It's now visible at [mtjody.github.io/no-longer-bored/](https://mtjody.github.io/no-longer-bored/). But wait, gosh dang it! something went wrong.
@@ -85,7 +84,7 @@ So this got me thinking. My initial thought was that one way of solving these ty
 
 In the [Terraform configuration](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function), notice the resources needed to get going. The bucket will contain the zip file, which contains the function itself. Next, some details about the function itself, and the IAM bindings needed for permissions to invoke the function. Note the value of the ? `name`-property of the archive resource. It is a solution for re-deploying the function on changes. By hashing the contents and adding the hash to the name, Terraform understands that the archive has changed and needs an update.
 
-```bash
+```bash main.tf
 resource "google_storage_bucket" "bucket" {
   name = var.bucket_name
 }
@@ -141,7 +140,8 @@ resource "google_cloudfunctions_function_iam_binding" "binding" {
 
 The function itself was pretty simple, all it had to do was call the API for me and return the result. When implementing this, I made sure not to depend on any packages so that the function would be as simple as possible to avoid depending on other than built-in packages, and also help to reduce startup latency.
 
-```JavaScript
+```js index.js
+//functions/bored-proxy/index.js
 const http = require("http");
 
 exports.boredProxy = (req, res) => {

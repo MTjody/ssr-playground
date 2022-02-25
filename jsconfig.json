@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ]
+    }
+  },
+  "include": [
+    "**/*.jsx",
+    "**/*.js",
+    ".contentlayer/generated"
+  ]
+}

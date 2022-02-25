@@ -16,7 +16,7 @@ But the component is a lot more advanced than that. A good way to find out the c
 
 Also if we notice that each test starts the exact same way, maybe we should try to extract the code to avoid duplication as much as possible. Notice that the argument to render are the same six lines of code, so why not extract them into a const in the parent scope, turning this:
 
-```JavaScript
+```jsx Autocomplete.spec.tsx
 describe("Combo box", () => {
   it("should render an input field", () => {
     const { container, getByLabelText, debug } = render(
@@ -46,7 +46,7 @@ describe("Combo box", () => {
 Into this:
 
 
-```JavaScript
+```jsx Autocomplete.spec.tsx
 describe("Combo box", () => {
   const comboBox = (
     <Autocomplete
@@ -69,7 +69,7 @@ describe("Combo box", () => {
 
 If we have tests that need some setup to run _before each_ unit test, or _before all_ unit tests, we use the `beforeEach` or `beforeAll` method, and in the callback argument we specify what needs to be done. If we need to do clean-up there is the corresponding `afterEach` and `afterAll` methods.
 
-```JavaScript
+```js Autocomplete.spec.tsx
 describe("Combo box", () => {
   beforeEach(() => {
     console.log("This will run before each and every test (it-statement) in the scope");
@@ -96,7 +96,7 @@ Back to writing actual unit tests, what more scenarios can we think of? In this 
 
 Straightforward enough, now let's try to write the tests. You can use debug statements to get a feel for what is rendered on the DOM and how to get a hold of (parts of) the elements you're testing.
 
-```Javascript
+```js Autocomplete.spec.tsx
 it("should show the list of movies on focus", () => {
   const { getByLabelText, container } = render(comboBox);
   userEvent.click(getByLabelText("Movie"));
@@ -111,7 +111,7 @@ For this first test, we use the [getAllByRole](https://testing-library.com/docs/
 Let's continue with the other test cases.
 
 
-```Javascript
+```js Autocomplete.spec.tsx
 it("should filter the list of movies according to the input", () => {
   const { getByLabelText, container } = render(comboBox);
   // We skip the click/focus assertion since we already checked it
@@ -154,7 +154,7 @@ The AutoComplete component has another variant as well: the [Multiple Values](ht
 Easily translatable to it-statements, we get these tests:
 
 
-```JavaScript
+```jsx Autocomplete.spec.tsx
 describe("Multiple Values", () => {
   const multipleValues = (
     <Autocomplete
@@ -176,17 +176,17 @@ describe("Multiple Values", () => {
 
 The test above will fail! Why? Because the chip is one button, but there is also a clear button in the component. This is visible if you add the debug statement before the expect statement fails. You'll get a printout of the DOM that looks something like this:
 
-```HTML
+```html
 <!-- first match -->
 <div
-  class="MuiButtonBase-root MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-deletable MuiChip-deletableColorDefault MuiChip-filledDefault MuiAutocomplete-tag MuiAutocomplete-tagSizeMedium css-1k430x0-MuiButtonBase-root-MuiChip-root"
+  class="MuiButtonBase-root MuiChip-root MuiChip-filled ...etc"
   data-tag-index="0"
   role="button"
   tabindex="-1"><!-- children omitted --></div>
 <!-- second match -->
 <button
   aria-label="Open"
-  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+  class="MuiButtonBase-root MuiIconButton-root ...etc"
   tabindex="-1"
   title="Open"
   type="button"><!-- children omitted --></button>
@@ -200,7 +200,7 @@ We've been using a utility called [userEvent](https://testing-library.com/docs/e
 
 Note the different usage between e.g. `.click()`, `.type()`, and `.keyboard()`. The `keyboard` function let's us fire one-off keyboard events, whereas `type` accepts whole strings.
 
-```Javascript
+```js Autocomplete.spec.tsx
 function hasTagIndex(chip: HTMLElement) { 
   return chip.getAttribute("data-tag-index") !== null;
 };
@@ -226,7 +226,7 @@ it("should add a chip once a value from the list has been selected", () => {
 The implementation of remaining test cases cover nothing new and have been omitted from this post. They're available in the repo linked at the bottom of this post. If we run the test suite now using the terminal, we get the following output. Note the structure of the report, and how any english-speaking person can make sense of it.
 
 
-```terminal
+```sh
 ➜  unit-tests git:(main) ✗ npm t
 
 > unit-tests@1.0.0 test
