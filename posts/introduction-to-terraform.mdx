@@ -37,7 +37,7 @@ Now let’s look into some configuration files.
 
 The Terraform block allows us to specify which version of TF we need. _Backend_ is where the _Terraform state_ is stored, it can be local or remote. We’ll get back to this later.
 
-```hcl
+```hcl main.tf
 terraform {
   required_version = ">= 0.13"
   backend "gcs" {
@@ -48,7 +48,7 @@ terraform {
 
 **locals** is a block of locally defined variables, in this case we define a `credentials_file` variable used for GCP credentials. The `file`-function lets us load a file and use the file contents in our config.
 
-```hcl
+```hcl main.tf
 locals {
   credentials_file = file(var.keyfile_path)
 }
@@ -56,7 +56,7 @@ locals {
 
 The **provider** block specifies that we’re using GCP. It requires a project id and credentials. The version specifies what version of the provider we’re using.
 
-```hcl
+```hcl main.tf
 provider "google" {
   project     = var.project_id
   credentials = local.credentials_file
@@ -69,7 +69,7 @@ We also list the modules we've defined in folders, with a source path, and a var
 
 The ‘split’ function converts a string into a list using the provided separator. Here we used it to convert a string of comma-separated email addresses into a list.
 
-```hcl
+```hcl main.tf
 module "monitoring" {
   source = "./monitoring"
   notification_recipients        = split(",", var.notification_recipients)
@@ -84,7 +84,7 @@ module "cloud-storage" {
 
 Input variables can be defined as well, with support for type checking and default values.
 
-```hcl
+```hcl main.tf
 variable "keyfile_path" {
   type    = string
   default = "some value"
