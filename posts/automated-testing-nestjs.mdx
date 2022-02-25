@@ -40,7 +40,7 @@ Let's look at some code. We'll be looking at tests using [Karma](https://karma-r
 4. Mock dependencies - if needed
 5. Call a function and check the result against what you expect
 
-```js
+```js some.service.test.js
 // Import whatever it is you're testing
 import { SomeService } from '@app/services/some.service';
 
@@ -87,7 +87,7 @@ The functions above are some examples of functions in the Jasmine framework. Not
 
 Now consider a service which has dependencies, but they're not relly important to what we're testing. We just want to know if our service does what we expect it to. Writing a test and initializing the service the same way your app does will trigger the other services and they could potentially trigger their services and so on. This in turn could cause your test to either be really slow, or err on something you don't really care about.
 
-```js
+```js some.service.test.js
 describe('SomeService', () => {
   let service: SomeService;
   /*
@@ -128,7 +128,7 @@ In the implementation of `someFunction`, the `HttpClient` dependency is invoked.
 
 Consider a service, `PopularService`, which gets injected into many other services / components. Now if you'd be writing tests for these services and components you'd probably repeat a lot of code by creating `PopularService` spies everywhere. An elegant way of solving this using e.g. TypeScript (or any other typed language) could be to create an interface `PopularService` which is implemented by `PopularServiceImpl`. You could then create a `PopularServiceMock` which also implements `PopularService`, and use the mock class in your all your tests:
 
-```js
+```js users.service.test.js
 describe("UsersService", () => {
   let usersService: UsersService;
   let usersDaoMock: UsersDaoMock;

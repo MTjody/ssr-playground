@@ -14,7 +14,7 @@ In [this previous post](/posts/github-actions), we learned how to setup a Github
 
 Let's jump right in to the build.yml file from before, and make some changes. We'll add the trigger to include push events from all branches, and under the jobs object, we'll add some properties. Congrats, your workflow is now parallelised.
 
-```yaml
+```yaml build.yml
 # .github/workflows/build.yml
 name: Build the client
 # Controls when the action will run.
@@ -53,7 +53,7 @@ Each job runner needs to run on something, e.g. a predefined OS or container. A 
 
 Ideally, we'll perform tasks here that can benefit upcoming jobs somehow. In our case, we want to install and cache our dependencies. This allows other jobs to re-use what's in the cache to increase the overall workflow speed. Let's have a look:
 
-```yaml
+```yaml build.yml
 # .github/workflows/build.yml
 # Omitted
 jobs:
@@ -116,7 +116,7 @@ In the UnitTest job below, note a few things:
 2. we need to checkout the code, retrieve the cahce and perform an install again. We tell yarn to install from the local cache by passing the `--prefer-offline` argument.
 3. If we were to omit the cache and install, the `yarn test` would likely trigger something like `jest`, which wouldn't exist in this Github Actions runner, since each runner is a separate fresh instance.
 
-```yaml
+```yaml build.yml
 # .github/workflows/build.yml
 # Omitted
 jobs:

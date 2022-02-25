@@ -23,7 +23,7 @@ export default function Post({ post }) {
 
 function PostLayout({ children, title, description, date, readingTime, tldr }) {
   const sectionElem = useRef();
-  console.log(readingTime);
+
   useEffect(() => {
     insertCommentSection(sectionElem);
   }, []);
@@ -56,28 +56,6 @@ function PostLayout({ children, title, description, date, readingTime, tldr }) {
     </Layout>
   );
 }
-/*
-export async function getStaticPaths() {
-  const paths = allPosts.map((post) => {
-    console.log(post);
-    return post._id;
-  });
-  console.log("paths", paths);
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
-  console.log("post", post);
-  return {
-    props: {
-      post,
-    },
-  };
-}*/
 
 export async function getStaticPaths() {
   return {

@@ -2,7 +2,7 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import readingTime from "reading-time";
 import { remarkCodeHike } from "@code-hike/mdx";
-// lol hack
+// lol hack. Better way to load JSON?
 import { theme } from "./styles/theme";
 
 export const Post = defineDocumentType(() => ({

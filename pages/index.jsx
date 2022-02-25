@@ -5,7 +5,6 @@ import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 import styles from "./index.module.css";
 import utilStyles from "../styles/utils.module.css";
-//import { getSortedPostsData } from "../lib/posts";
 import DateComponent from "../components/date";
 import Topics from "../components/topics";
 import { useState } from "react";
@@ -23,7 +22,6 @@ export default function Home({ posts }) {
   }
 
   function postMapper({ slug, date, title, description, topics }) {
-    //console.log("id", slug, date, title, description, topics);
     return (
       <li key={slug} className={`${styles.blogPost} ${utilStyles.listItem}`}>
         <Link href="/posts/[id]" as={`/posts/${slug}`}>
